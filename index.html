@@ -1,12 +1,85 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Plano Estratégico de Marketing - Toyota</title>
-  <link rel="stylesheet" href="styles.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background-color: #f4f4f9;
+      color: #333;
+      padding: 20px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    header h1 {
+      font-size: 2rem;
+      color: #E30613; /* Vermelho Toyota */
+    }
+
+    #timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .timeline-item {
+      background-color: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+    }
+
+    .timeline-item h2 {
+      color: #000;
+      margin-bottom: 10px;
+    }
+
+    .timeline-item p {
+      color: #666;
+    }
+
+    .details {
+      display: none;
+      padding-left: 20px;
+    }
+
+    .details ul {
+      list-style-type: none;
+    }
+
+    .details ul li {
+      padding: 5px 0;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 0.8rem;
+      color: #666;
+    }
+
+    /* Adiciona estilos para a seleção quando clicado */
+    .selected {
+      background-color: #E30613;
+      color: #fff;
+    }
+  </style>
 </head>
 <body>
+
   <header>
     <h1>Plano Estratégico de Marketing - Cronograma de Ações</h1>
     <p><strong>Período:</strong> Outubro 2024 - Março 2025</p>
@@ -57,6 +130,19 @@
     <p>Guilherme Marangon - Apresentação: 02/10/2024</p>
   </footer>
 
-  <script src="scripts.js"></script>
+  <script>
+    function toggleDetails(faseId) {
+      const details = document.getElementById(faseId);
+      const timelineItem = details.parentElement;
+      if (details.style.display === "none" || !details.style.display) {
+        details.style.display = "block";
+        timelineItem.classList.add('selected'); // Adiciona a classe para destacar a seleção
+      } else {
+        details.style.display = "none";
+        timelineItem.classList.remove('selected'); // Remove a classe ao fechar
+      }
+    }
+  </script>
+
 </body>
 </html>
