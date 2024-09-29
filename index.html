@@ -151,7 +151,7 @@
             text-decoration: underline;
         }
         .budget-input {
-            width: 100px;
+            width: 120px;
             padding: 5px;
             margin: 10px 0;
             border: 1px solid #ddd;
@@ -175,7 +175,7 @@
 <!-- Total Budget Input -->
 <div style="text-align: center; margin-top: 20px;">
     <label for="total-budget">Total Budget: R$</label>
-    <input type="number" id="total-budget" class="budget-input" value="59000000" oninput="updateBudgets()">
+    <input type="text" id="total-budget" class="budget-input" value="59,000,000" oninput="formatAndUpdateBudget(this)">
 </div>
 
 <div class="table-container">
@@ -198,9 +198,9 @@
                         <div class="progress-bar" id="mini-progress1" style="width: 0%;"></div>
                     </div>
                 </td>
-                <td>Criação de conteúdo para mídias digitais, TV, e OOH.</td>
+                <td class="flip-content" data-rationale="Foco em campanhas digitais e TV devido à alta penetração no mercado brasileiro, utilizando influenciadores para maior impacto.">Criação de conteúdo para mídias digitais, TV, e OOH.</td>
                 <td>Aprovação em 10 dias, 100% dos contratos fechados</td>
-                <td class="toggle-content" id="budget1">R$ 15M</td>
+                <td class="toggle-content" id="budget1">R$ 15,000,000</td>
             </tr>
             <tr id="details1" class="expandable-row">
                 <td colspan="5" class="expandable-content">
@@ -225,9 +225,7 @@
                                         <li><input type="checkbox" onchange="updateProgress('progress1', 'checklist1', 'mini-progress1')"> Implementação de mídia programática para alcance otimizado em plataformas digitais.</li>
                                         <li><input type="checkbox" onchange="updateProgress('progress1', 'checklist1', 'mini-progress1')"> Materiais OOH em locais estratégicos, focando em proximidade de concessionárias.</li>
                                     </ul>
-                                    <div class="progress" id="progress1">
-                                        <div class="progress-bar" style="width: 0%;"></div>
-                                    </div>
+                                    <!-- Removed mini progress bar here -->
                                 </td>
                             </tr>
                             <tr>
@@ -251,9 +249,9 @@
                         <div class="progress-bar" id="mini-progress2" style="width: 0%;"></div>
                     </div>
                 </td>
-                <td>Logística completa, incluindo convites e coordenação de transporte.</td>
+                <td class="flip-content" data-rationale="Investimento em logística para garantir qualidade e experiência premium, aumentando a percepção positiva do lançamento.">Logística completa, incluindo convites e coordenação de transporte.</td>
                 <td>100% de conformidade logística e feedback positivo.</td>
-                <td class="toggle-content" id="budget2">R$ 5M</td>
+                <td class="toggle-content" id="budget2">R$ 5,000,000</td>
             </tr>
             <tr id="details2" class="expandable-row">
                 <td colspan="5" class="expandable-content">
@@ -276,9 +274,6 @@
                                         <li><input type="checkbox" onchange="updateProgress('progress2', 'checklist2', 'mini-progress2')"> Envio de convites personalizados para influenciadores e mídia.</li>
                                         <li><input type="checkbox" onchange="updateProgress('progress2', 'checklist2', 'mini-progress2')"> Organização de transporte premium e treinamento da equipe de recepção.</li>
                                     </ul>
-                                    <div class="progress" id="progress2">
-                                        <div class="progress-bar" style="width: 0%;"></div>
-                                    </div>
                                 </td>
                             </tr>
                             <tr>
@@ -302,9 +297,9 @@
                         <div class="progress-bar" id="mini-progress3" style="width: 0%;"></div>
                     </div>
                 </td>
-                <td>Evento exclusivo com demonstrações ao vivo e cobertura midiática.</td>
+                <td class="flip-content" data-rationale="Experiências interativas e demonstrações ao vivo elevam o engajamento do público e aumentam a cobertura midiática.">Evento exclusivo com demonstrações ao vivo e cobertura midiática.</td>
                 <td>50 convidados VIPs, 15 veículos de mídia cobrindo o evento.</td>
-                <td class="toggle-content" id="budget3">R$ 15M</td>
+                <td class="toggle-content" id="budget3">R$ 15,000,000</td>
             </tr>
             <tr id="details3" class="expandable-row">
                 <td colspan="5" class="expandable-content">
@@ -327,9 +322,6 @@
                                         <li><input type="checkbox" onchange="updateProgress('progress3', 'checklist3', 'mini-progress3')"> Test-drives e demonstrações ao vivo do modelo híbrido.</li>
                                         <li><input type="checkbox" onchange="updateProgress('progress3', 'checklist3', 'mini-progress3')"> Espaços interativos e experiências com realidade aumentada.</li>
                                     </ul>
-                                    <div class="progress" id="progress3">
-                                        <div class="progress-bar" style="width: 0%;"></div>
-                                    </div>
                                 </td>
                             </tr>
                             <tr>
@@ -353,9 +345,9 @@
                         <div class="progress-bar" id="mini-progress4" style="width: 0%;"></div>
                     </div>
                 </td>
-                <td>Ativações em concessionárias e campanhas de mídia integrada.</td>
+                <td class="flip-content" data-rationale="As campanhas de mídia integrada, test-drives e ativações em concessionárias visam maximizar as vendas e engajamento do consumidor.">Ativações em concessionárias e campanhas de mídia integrada.</td>
                 <td>6 mil unidades vendidas, aumento de 30% nas visitas.</td>
-                <td class="toggle-content" id="budget4">R$ 24M</td>
+                <td class="toggle-content" id="budget4">R$ 24,000,000</td>
             </tr>
             <tr id="details4" class="expandable-row">
                 <td colspan="5" class="expandable-content">
@@ -380,9 +372,6 @@
                                         <li><input type="checkbox" onchange="updateProgress('progress4', 'checklist4', 'mini-progress4')"> Parcerias com fintechs para condições de financiamento vantajosas.</li>
                                         <li><input type="checkbox" onchange="updateProgress('progress4', 'checklist4', 'mini-progress4')"> Estandes personalizados com QR codes para engajamento digital direto.</li>
                                     </ul>
-                                    <div class="progress" id="progress4">
-                                        <div class="progress-bar" style="width: 0%;"></div>
-                                    </div>
                                 </td>
                             </tr>
                             <tr>
@@ -411,16 +400,28 @@
 <script>
     // Function to update budgets based on total budget input
     function updateBudgets() {
-        const totalBudget = parseFloat(document.getElementById('total-budget').value) || 0;
+        const totalBudget = parseFloat(document.getElementById('total-budget').value.replace(/,/g, '')) || 0;
         const budget1 = (totalBudget * 0.2542).toFixed(2); // 25.42% of total
         const budget2 = (totalBudget * 0.0847).toFixed(2); // 8.47% of total
         const budget3 = (totalBudget * 0.2542).toFixed(2); // 25.42% of total
         const budget4 = (totalBudget * 0.4069).toFixed(2); // 40.69% of total
 
-        document.getElementById('budget1').textContent = `R$ ${budget1}`;
-        document.getElementById('budget2').textContent = `R$ ${budget2}`;
-        document.getElementById('budget3').textContent = `R$ ${budget3}`;
-        document.getElementById('budget4').textContent = `R$ ${budget4}`;
+        document.getElementById('budget1').textContent = `R$ ${formatNumber(budget1)}`;
+        document.getElementById('budget2').textContent = `R$ ${formatNumber(budget2)}`;
+        document.getElementById('budget3').textContent = `R$ ${formatNumber(budget3)}`;
+        document.getElementById('budget4').textContent = `R$ ${formatNumber(budget4)}`;
+    }
+
+    // Function to format numbers with commas for better readability
+    function formatNumber(value) {
+        return new Intl.NumberFormat('pt-BR').format(value);
+    }
+
+    // Function to format input values while typing
+    function formatAndUpdateBudget(input) {
+        const value = input.value.replace(/[^\d]/g, '');
+        input.value = new Intl.NumberFormat('pt-BR').format(value);
+        updateBudgets();
     }
 
     function toggleDetails(id) {
@@ -436,6 +437,15 @@
             row.previousElementSibling.classList.add('selected');
         }
     }
+
+    // Function to toggle between action details and rationale when clicking a row
+    document.querySelectorAll('.flip-content').forEach(item => {
+        item.addEventListener('click', () => {
+            const originalText = item.textContent;
+            const rationale = item.getAttribute('data-rationale');
+            item.textContent = item.textContent === rationale ? originalText : rationale;
+        });
+    });
 
     function updateProgress(progressId, checklistId, miniProgressId) {
         const checklist = document.getElementById(checklistId);
