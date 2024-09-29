@@ -1,5 +1,5 @@
 ------------------------------ 
-Plano Estratégio de Marketing
+PLANO ESTRATÉGICO DE MARKETING
 
 -------------------
 para TOYOTA BRASIL
