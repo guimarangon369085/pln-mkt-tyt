@@ -18,16 +18,15 @@
         }
         header {
             display: flex;
-            flex-direction: column;
             align-items: center;
-            text-align: center;
+            justify-content: flex-start;
             margin-bottom: 20px;
             border-bottom: 2px solid #D71921;
             padding-bottom: 10px;
         }
         .logo {
             width: 80px;
-            margin-bottom: 10px;
+            margin-right: 20px;
         }
         h1 {
             font-size: 24px;
@@ -225,9 +224,7 @@
                                         <li><input type="checkbox" onchange="updateProgress('progress1', 'checklist1', 'mini-progress1')"> Implementação de mídia programática para alcance otimizado em plataformas digitais.</li>
                                         <li><input type="checkbox" onchange="updateProgress('progress1', 'checklist1', 'mini-progress1')"> Materiais OOH em locais estratégicos, focando em proximidade de concessionárias.</li>
                                     </ul>
-                                    <div class="progress" id="progress1">
-                                        <div class="progress-bar" style="width: 0%;"></div>
-                                    </div>
+                                    <!-- Remove mini progress bar here -->
                                 </td>
                             </tr>
                             <tr>
@@ -276,9 +273,6 @@
                                         <li><input type="checkbox" onchange="updateProgress('progress2', 'checklist2', 'mini-progress2')"> Envio de convites personalizados para influenciadores e mídia.</li>
                                         <li><input type="checkbox" onchange="updateProgress('progress2', 'checklist2', 'mini-progress2')"> Organização de transporte premium e treinamento da equipe de recepção.</li>
                                     </ul>
-                                    <div class="progress" id="progress2">
-                                        <div class="progress-bar" style="width: 0%;"></div>
-                                    </div>
                                 </td>
                             </tr>
                             <tr>
@@ -327,9 +321,6 @@
                                         <li><input type="checkbox" onchange="updateProgress('progress3', 'checklist3', 'mini-progress3')"> Test-drives e demonstrações ao vivo do modelo híbrido.</li>
                                         <li><input type="checkbox" onchange="updateProgress('progress3', 'checklist3', 'mini-progress3')"> Espaços interativos e experiências com realidade aumentada.</li>
                                     </ul>
-                                    <div class="progress" id="progress3">
-                                        <div class="progress-bar" style="width: 0%;"></div>
-                                    </div>
                                 </td>
                             </tr>
                             <tr>
@@ -380,9 +371,6 @@
                                         <li><input type="checkbox" onchange="updateProgress('progress4', 'checklist4', 'mini-progress4')"> Parcerias com fintechs para condições de financiamento vantajosas.</li>
                                         <li><input type="checkbox" onchange="updateProgress('progress4', 'checklist4', 'mini-progress4')"> Estandes personalizados com QR codes para engajamento digital direto.</li>
                                     </ul>
-                                    <div class="progress" id="progress4">
-                                        <div class="progress-bar" style="width: 0%;"></div>
-                                    </div>
                                 </td>
                             </tr>
                             <tr>
@@ -409,20 +397,6 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2/dist/umd/popper.min.js"></script>
 <script src="https://unpkg.com/tippy.js@6"></script>
 <script>
-    // Function to update budgets based on total budget input
-    function updateBudgets() {
-        const totalBudget = parseFloat(document.getElementById('total-budget').value) || 0;
-        const budget1 = (totalBudget * 0.2542).toFixed(2); // 25.42% of total
-        const budget2 = (totalBudget * 0.0847).toFixed(2); // 8.47% of total
-        const budget3 = (totalBudget * 0.2542).toFixed(2); // 25.42% of total
-        const budget4 = (totalBudget * 0.4069).toFixed(2); // 40.69% of total
-
-        document.getElementById('budget1').textContent = `R$ ${budget1}`;
-        document.getElementById('budget2').textContent = `R$ ${budget2}`;
-        document.getElementById('budget3').textContent = `R$ ${budget3}`;
-        document.getElementById('budget4').textContent = `R$ ${budget4}`;
-    }
-
     function toggleDetails(id) {
         const row = document.getElementById(id);
         const allRows = document.querySelectorAll('.expandable-row');
@@ -444,8 +418,10 @@
         const progressBar = document.getElementById(progressId).querySelector('.progress-bar');
         const miniProgressBar = document.getElementById(miniProgressId);
         const progressPercent = (completedTasks / tasks.length) * 100;
+
         progressBar.style.width = progressPercent + '%';
-        miniProgressBar.style.width = progressPercent + '%';
+
+        // Atualiza a barra principal de progresso (barra geral)
         updateMainProgress();
     }
 
@@ -453,25 +429,40 @@
         const allMiniBars = document.querySelectorAll('.progress-bar');
         let totalProgress = 0;
         let count = 0;
+
         allMiniBars.forEach(bar => {
             if (bar.id.startsWith('mini-progress')) {
                 totalProgress += parseFloat(bar.style.width);
                 count++;
             }
         });
+
         const mainProgress = document.getElementById('main-progress-bar');
         const mainProgressPercent = totalProgress / count;
         mainProgress.style.width = mainProgressPercent + '%';
     }
 
-    // Initialize tooltips for icons
+    function updateBudgets() {
+        const totalBudget = parseFloat(document.getElementById('total-budget').value) || 0;
+        const budget1 = (totalBudget * 0.2542).toFixed(2); // 25.42% do total
+        const budget2 = (totalBudget * 0.0847).toFixed(2); // 8.47% do total
+        const budget3 = (totalBudget * 0.2542).toFixed(2); // 25.42% do total
+        const budget4 = (totalBudget * 0.4069).toFixed(2); // 40.69% do total
+
+        document.getElementById('budget1').textContent = `R$ ${budget1}`;
+        document.getElementById('budget2').textContent = `R$ ${budget2}`;
+        document.getElementById('budget3').textContent = `R$ ${budget3}`;
+        document.getElementById('budget4').textContent = `R$ ${budget4}`;
+    }
+
+    // Atualiza os tooltips para os ícones
     tippy('.tooltip-icon', {
-        content: 'More information',
+        content: 'Mais informações',
         placement: 'top',
         arrow: true,
     });
 
-    // Initial budget update
+    // Chama a função de atualização do orçamento ao carregar a página
     updateBudgets();
 </script>
 
