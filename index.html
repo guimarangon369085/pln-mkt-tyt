@@ -1,151 +1,317 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Plano Estratégico de Marketing - Toyota</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
-
-    body {
-      background-color: #f4f4f9;
-      color: #333;
-      padding: 20px;
-    }
-
-    header {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-
-    header h1 {
-      font-size: 2rem;
-      color: #E30613; /* Vermelho Toyota */
-    }
-
-    #timeline {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .timeline-item {
-      background-color: #fff;
-      border-radius: 10px;
-      padding: 20px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      cursor: pointer;
-    }
-
-    .timeline-item h2 {
-      color: #000;
-      margin-bottom: 10px;
-    }
-
-    .timeline-item p {
-      color: #666;
-    }
-
-    .details {
-      display: none;
-      padding-left: 20px;
-    }
-
-    .details ul {
-      list-style-type: none;
-    }
-
-    .details ul li {
-      padding: 5px 0;
-    }
-
-    footer {
-      text-align: center;
-      margin-top: 40px;
-      font-size: 0.8rem;
-      color: #666;
-    }
-
-    /* Adiciona estilos para a seleção quando clicado */
-    .selected {
-      background-color: #E30613;
-      color: #fff;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plano Estratégico de Marketing - Cronograma de Ações</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            padding: 20px;
+        }
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 2px solid #D71921;
+            padding-bottom: 15px;
+        }
+        .logo {
+            width: 60px;
+            margin-right: 15px;
+        }
+        h1 {
+            font-size: 22px;
+            color: #D71921;
+        }
+        .progress-container {
+            margin: 15px auto;
+            width: 100%;
+            max-width: 800px;
+        }
+        .main-progress {
+            height: 10px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+        }
+        .progress-bar {
+            height: 100%;
+            background-color: #D71921;
+            width: 0;
+            transition: width 0.3s ease;
+        }
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #D71921;
+            color: #fff;
+        }
+        tr:hover {
+            background-color: #f0f0f0;
+        }
+        .clickable {
+            cursor: pointer;
+        }
+        .expandable-row {
+            display: none;
+        }
+        .toggle-content {
+            color: #007bff;
+            cursor: pointer;
+        }
+        .checklist li {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+        .checklist input {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+        .watermark {
+            text-align: right;
+            font-size: 12px;
+            color: rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
 
-  <header>
+<header>
+    <img src="toyota-logo.png" alt="Toyota Logo" class="logo">
     <h1>Plano Estratégico de Marketing - Cronograma de Ações</h1>
-    <p><strong>Período:</strong> Outubro 2024 - Março 2025</p>
-    <p><strong>Budget Total:</strong> R$ 59 Milhões</p>
-  </header>
+</header>
 
-  <!-- Timeline de Fases Principais -->
-  <section id="timeline">
-    <div class="timeline-item" onclick="toggleDetails('fase1')">
-      <h2>Lançamento SUV-B (Awareness e Consideração)</h2>
-      <p><strong>Budget:</strong> R$ 30M</p>
-      <div id="fase1" class="details">
-        <ul>
-          <li><strong>07/10/2024:</strong> Solicitação de cotações para agências de eventos (R$ 50K)</li>
-          <li><strong>14/10/2024:</strong> Recebimento das cotações e avaliação (R$ 0)</li>
-          <li><strong>01/11/2024:</strong> Início das campanhas de TV, Digital, OOH (R$ 26M)</li>
-          <li><strong>02/12/2024:</strong> Início da montagem do evento de lançamento (R$ 500K)</li>
-          <li><strong>08/12/2024:</strong> Evento de lançamento para a imprensa (R$ 1,5M)</li>
-          <li><strong>09/12/2024:</strong> Evento de lançamento para concessionárias (R$ 1,5M)</li>
-        </ul>
-      </div>
+<div class="progress-container">
+    <div class="main-progress">
+        <div class="progress-bar" id="main-progress-bar"></div>
     </div>
+</div>
 
-    <div class="timeline-item" onclick="toggleDetails('fase2')">
-      <h2>Proteção do Segmento de Híbridos (Comparação e Promoção)</h2>
-      <p><strong>Budget:</strong> R$ 15M</p>
-      <div id="fase2" class="details">
-        <ul>
-          <li><strong>01/11/2024:</strong> Início das campanhas comparativas de TV e digital (R$ 5M)</li>
-          <li><strong>03/11/2024:</strong> Publicação de blogs comparativos e mídia digital (R$ 4M)</li>
-          <li><strong>10/11/2024:</strong> Promoções e incentivos nas concessionárias (R$ 4M)</li>
-          <li><strong>01/12/2024:</strong> Retargeting digital para híbridos (R$ 2M)</li>
-        </ul>
-      </div>
-    </div>
+<!-- Budget Input -->
+<div style="text-align: center; margin-top: 20px;">
+    <label for="total-budget">Orçamento Total: R$</label>
+    <input type="text" id="total-budget" value="59,000,000" oninput="updateBudget()">
+</div>
 
-    <div class="timeline-item" onclick="toggleDetails('fase3')">
-      <h2>Ativações e Conversões (Test-Drives e Promoções)</h2>
-      <p><strong>Budget:</strong> R$ 8M</p>
-      <div id="fase3" class="details">
-        <ul>
-          <li><strong>01/01/2025:</strong> Início dos test-drives nas concessionárias (R$ 8M)</li>
-          <li><strong>15/01/2025:</strong> Primeira avaliação de KPIs de conversão</li>
-          <li><strong>31/03/2025:</strong> Finalização e relatórios finais de desempenho</li>
-        </ul>
-      </div>
-    </div>
-  </section>
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Data</th>
+                <th>Atividade</th>
+                <th>Responsável</th>
+                <th>Target</th>
+                <th>Entregável</th>
+                <th>Budget</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Outubro 2024 -->
+            <tr><td colspan="6"><strong>Outubro 2024 - Planejamento e Solicitações</strong></td></tr>
+            <tr class="clickable">
+                <td>07/10/2024</td>
+                <td>Solicitação de cotações para agências de eventos</td>
+                <td>Time de Marketing Toyota</td>
+                <td>Fornecedores e agências</td>
+                <td>Cotações solicitadas e recebidas</td>
+                <td>R$ 50K</td>
+            </tr>
+            <tr class="clickable">
+                <td>08/10/2024</td>
+                <td>Acompanhamento das cotações recebidas</td>
+                <td>Time de Marketing & Compras</td>
+                <td>Interno</td>
+                <td>Atualização das cotações</td>
+                <td>-</td>
+            </tr>
+            <tr class="clickable">
+                <td>09/10/2024</td>
+                <td>Avaliação preliminar das propostas</td>
+                <td>Time de Marketing & Compras</td>
+                <td>Interno</td>
+                <td>Pré-seleção de propostas</td>
+                <td>-</td>
+            </tr>
+            <tr class="clickable">
+                <td>10/10/2024</td>
+                <td>Solicitação de propostas complementares ou ajustes</td>
+                <td>Time de Marketing & Compras</td>
+                <td>Fornecedores</td>
+                <td>Propostas ajustadas</td>
+                <td>-</td>
+            </tr>
+            <tr class="clickable">
+                <td>13/10/2024</td>
+                <td>Reunião de avaliação final das cotações</td>
+                <td>Time de Marketing & Compras</td>
+                <td>Interno</td>
+                <td>Seleção de três agências</td>
+                <td>-</td>
+            </tr>
 
-  <footer>
-    <p>Guilherme Marangon - Apresentação: 02/10/2024</p>
-  </footer>
+            <!-- Novembro 2024 -->
+            <tr><td colspan="6"><strong>Novembro 2024 - Contratação de Agências e Início das Campanhas</strong></td></tr>
+            <tr class="clickable">
+                <td>01/11/2024</td>
+                <td>Início da campanha de TV (Globo, SBT, Record)</td>
+                <td>DAVID</td>
+                <td>Público geral (30-45 anos)</td>
+                <td>Campanha de awareness lançada</td>
+                <td>R$ 10M</td>
+            </tr>
+            <tr class="clickable">
+                <td>02/11/2024</td>
+                <td>Início da campanha digital (Google, Facebook, Instagram)</td>
+                <td>DAVID</td>
+                <td>Público digital (30-45 anos)</td>
+                <td>Campanha digital segmentada</td>
+                <td>R$ 10M</td>
+            </tr>
+            <tr class="clickable">
+                <td>03/11/2024</td>
+                <td>Publicação de outdoors em SP e RJ</td>
+                <td>DAVID</td>
+                <td>Público em trânsito</td>
+                <td>OOH lançado em pontos estratégicos</td>
+                <td>R$ 6M</td>
+            </tr>
+            <tr class="clickable">
+                <td>05/11/2024</td>
+                <td>Contratação de fornecedores e infraestrutura para o evento</td>
+                <td>Agência de Eventos</td>
+                <td>Interno</td>
+                <td>Fornecedores confirmados</td>
+                <td>R$ 500K</td>
+            </tr>
 
-  <script>
-    function toggleDetails(faseId) {
-      const details = document.getElementById(faseId);
-      const timelineItem = details.parentElement;
-      if (details.style.display === "none" || !details.style.display) {
-        details.style.display = "block";
-        timelineItem.classList.add('selected'); // Adiciona a classe para destacar a seleção
-      } else {
-        details.style.display = "none";
-        timelineItem.classList.remove('selected'); // Remove a classe ao fechar
-      }
+            <!-- Dezembro 2024 -->
+            <tr><td colspan="6"><strong>Dezembro 2024 - Evento de Lançamento e Preparação das Concessionárias</strong></td></tr>
+            <tr class="clickable">
+                <td>01/12/2024</td>
+                <td>Reunião de alinhamento final com agências</td>
+                <td>Time de Marketing Toyota</td>
+                <td>Interno</td>
+                <td>Planejamento detalhado para o evento</td>
+                <td>-</td>
+            </tr>
+            <tr class="clickable">
+                <td>02/12/2024</td>
+                <td>Início da montagem do evento de lançamento</td>
+                <td>Agência de Eventos</td>
+                <td>Imprensa, concessionárias</td>
+                <td>Montagem de infraestrutura iniciada</td>
+                <td>R$ 500K</td>
+            </tr>
+            <tr class="clickable">
+                <td>03/12/2024</td>
+                <td>Testes de som, luz e projeção no local</td>
+                <td>Agência de Eventos</td>
+                <td>Imprensa, concessionárias</td>
+                <td>Testes de tecnologia e ajustes finais</td>
+                <td>-</td>
+            </tr>
+            <tr class="clickable">
+                <td>08/12/2024</td>
+                <td>Evento de lançamento para a imprensa</td>
+                <td>Agência de Eventos</td>
+                <td>Imprensa automotiva, influenciadores</td>
+                <td>Evento realizado, cobertura midiática iniciada</td>
+                <td>R$ 1.5M</td>
+            </tr>
+
+            <!-- Janeiro 2025 -->
+            <tr><td colspan="6"><strong>Janeiro 2025 - Ativações nas Concessionárias e Promoções</strong></td></tr>
+            <tr class="clickable">
+                <td>01/01/2025</td>
+                <td>Início dos test-drives nas concessionárias</td>
+                <td>Rede de Concessionárias</td>
+                <td>Consumidores interessados</td>
+                <td>Test-drives iniciados</td>
+                <td>R$ 8M</td>
+            </tr>
+            <tr class="clickable">
+                <td>02/01/2025</td>
+                <td>Ativações de promoções nas concessionárias</td>
+                <td>Rede de Concessionárias</td>
+                <td>Consumidores interessados</td>
+                <td>Promoções em andamento</td>
+                <td>-</td>
+            </tr>
+
+            <!-- Fevereiro-Março 2025 -->
+            <tr><td colspan="6"><strong>Fevereiro-Março 2025 - Ações Contínuas de Conversão</strong></td></tr>
+            <tr class="clickable">
+                <td>01/02/2025</td>
+                <td>Acompanhamento contínuo de conversão nas concessionárias</td>
+                <td>Rede de Concessionárias</td>
+                <td>Consumidores interessados</td>
+                <td>Relatórios semanais de desempenho</td>
+                <td>-</td>
+            </tr>
+            <tr class="clickable">
+                <td>10/02/2025</td>
+                <td>Segunda avaliação de KPIs de conversão</td>
+                <td>Time de Marketing Toyota</td>
+                <td>Interno</td>
+                <td>Relatório de desempenho atualizado</td>
+                <td>-</td>
+            </tr>
+            <tr class="clickable">
+                <td>31/03/2025</td>
+                <td>Finalização das campanhas e relatório final</td>
+                <td>Time de Marketing Toyota</td>
+                <td>Interno</td>
+                <td>Relatório final de KPIs e metas alcançadas</td>
+                <td>-</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="watermark">
+    © Guilherme Marangon - Apresentação em 02/10/2024
+</div>
+
+<script>
+    function updateBudget() {
+        const totalBudget = parseFloat(document.getElementById('total-budget').value.replace(/,/g, '')) || 0;
+        const budgetDistribution = [50000, 10000000, 10000000, 6000000, 500000, 1500000, 8000000]; // Budget allocation in order
+        const budgetElements = document.querySelectorAll('.budget');
+        budgetElements.forEach((el, index) => {
+            const allocatedBudget = budgetDistribution[index];
+            el.textContent = `R$ ${formatNumber(allocatedBudget)}`;
+        });
     }
-  </script>
+
+    function formatNumber(value) {
+        return new Intl.NumberFormat('pt-BR').format(value);
+    }
+
+    document.querySelectorAll('.toggle-content').forEach(content => {
+        content.addEventListener('click', function() {
+            const original = this.getAttribute('data-original');
+            const rationale = this.getAttribute('data-rationale');
+            this.textContent = this.textContent === rationale ? original : rationale;
+        });
+    });
+
+    updateBudget();
+</script>
 
 </body>
 </html>
