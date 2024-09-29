@@ -5,69 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Plano Estratégico de Marketing - Cronograma de Ações</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/dist/tippy.css">
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 20px;
+            font-family: Arial, sans-serif;
             background-color: #f9f9f9;
             color: #333;
-            position: relative;
+            padding: 20px;
         }
         header {
             display: flex;
             align-items: center;
-            text-align: center;
-            margin-bottom: 20px;
+            justify-content: center;
             border-bottom: 2px solid #D71921;
-            padding-bottom: 10px;
+            padding-bottom: 15px;
         }
         .logo {
-            width: 80px;
-            margin-right: 20px;
+            width: 60px;
+            margin-right: 15px;
         }
         h1 {
-            font-size: 24px;
+            font-size: 22px;
             color: #D71921;
-            margin: 0;
         }
-        .main-progress {
-            margin-top: 10px;
-            height: 20px;
-            background-color: #e0e0e0;
-            border-radius: 10px;
-            overflow: hidden;
+        .progress-container {
+            margin: 15px auto;
             width: 100%;
             max-width: 800px;
-            margin: 0 auto;
         }
-        .main-progress-bar {
+        .main-progress {
+            height: 10px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+        }
+        .progress-bar {
             height: 100%;
             background-color: #D71921;
+            width: 0;
             transition: width 0.3s ease;
-        }
-        .watermark {
-            position: fixed;
-            bottom: 10px;
-            right: 10px;
-            font-size: 12px;
-            color: rgba(0, 0, 0, 0.1);
-            transform: rotate(-45deg);
-            pointer-events: none;
-        }
-        .table-container {
-            overflow-x: auto;
         }
         table {
             width: 100%;
-            max-width: 1000px;
-            margin: 20px auto;
+            margin-top: 20px;
             border-collapse: collapse;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            background-color: #ffffff;
-            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         th, td {
             padding: 12px 15px;
@@ -76,51 +57,20 @@
         }
         th {
             background-color: #D71921;
-            color: white;
-            font-weight: bold;
+            color: #fff;
         }
         tr:hover {
-            background-color: #f5f5f5;
-        }
-        .expandable-row {
-            display: none;
-            background-color: #fdfdfd;
-            transition: all 0.3s ease;
-        }
-        .expandable-content {
-            padding: 10px;
-            border-left: 4px solid #D71921;
+            background-color: #f0f0f0;
         }
         .clickable {
             cursor: pointer;
-            transition: background-color 0.3s ease;
         }
-        .clickable:hover {
-            background-color: #f0f0f0;
+        .expandable-row {
+            display: none;
         }
-        .clickable.selected {
-            background-color: #f8f8f8;
-            border-left: 4px solid #D71921;
-        }
-        .details-table {
-            width: 100%;
-            margin-top: 10px;
-            border-collapse: collapse;
-            background-color: #fff;
-        }
-        .details-table th, .details-table td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-        .details-table th {
-            background-color: #e7e7e7;
-            color: #333;
-            font-weight: bold;
-        }
-        .checklist {
-            list-style: none;
-            padding: 0;
+        .toggle-content {
+            color: #007bff;
+            cursor: pointer;
         }
         .checklist li {
             margin-bottom: 8px;
@@ -131,31 +81,11 @@
             margin-right: 10px;
             transform: scale(1.2);
         }
-        .progress {
-            height: 10px;
-            background-color: #e0e0e0;
-            border-radius: 10px;
-            overflow: hidden;
-            margin-top: 5px;
-            max-width: 200px;
-        }
-        .progress-bar {
-            height: 100%;
-            background-color: #D71921;
-            transition: width 0.3s ease;
-        }
-        .toggle-content {
-            cursor: pointer;
-            color: #007bff;
-            text-decoration: underline;
-        }
-        .budget-input {
-            width: 120px;
-            padding: 5px;
-            margin: 10px 0;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+        .watermark {
             text-align: right;
+            font-size: 12px;
+            color: rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -166,321 +96,147 @@
     <h1>Plano Estratégico de Marketing - Cronograma de Ações</h1>
 </header>
 
-<!-- Main Project Progress Bar -->
-<div class="main-progress">
-    <div class="main-progress-bar" id="main-progress-bar" style="width: 0%;"></div>
+<div class="progress-container">
+    <div class="main-progress">
+        <div class="progress-bar" id="main-progress-bar"></div>
+    </div>
 </div>
 
-<!-- Total Budget Input -->
+<!-- Budget Input -->
 <div style="text-align: center; margin-top: 20px;">
-    <label for="total-budget">Total Budget: R$</label>
-    <input type="text" id="total-budget" class="budget-input" value="59,000,000" oninput="formatAndUpdateBudget(this)">
+    <label for="total-budget">Orçamento Total: R$</label>
+    <input type="text" id="total-budget" value="59,000,000" oninput="updateBudget()">
 </div>
 
 <div class="table-container">
-    <table class="table table-hover">
+    <table>
         <thead>
             <tr>
-                <th>Data de Início</th>
+                <th>Data</th>
                 <th>Ação</th>
-                <th>Detalhamento</th>
-                <th>KPIs Estimados</th>
-                <th>Budget Alocado</th>
+                <th>Descrição</th>
+                <th>KPIs</th>
+                <th>Orçamento</th>
             </tr>
         </thead>
         <tbody>
-            <!-- Desenvolvimento de Campanhas -->
+            <!-- Action 1 -->
             <tr class="clickable" onclick="toggleDetails('details1')">
                 <td>Out 2024</td>
-                <td>Desenvolvimento de campanhas
-                    <div class="progress">
-                        <div class="progress-bar" id="mini-progress1" style="width: 0%;"></div>
-                    </div>
-                </td>
-                <td class="flip-content" data-rationale="Foco em campanhas digitais e TV devido à alta penetração no mercado brasileiro, utilizando influenciadores para maior impacto.">Criação de conteúdo para mídias digitais, TV, e OOH.</td>
-                <td>Aprovação em 10 dias, 100% dos contratos fechados</td>
-                <td class="toggle-content" id="budget1">R$ 15,000,000</td>
+                <td>Desenvolvimento de campanhas</td>
+                <td class="toggle-content" data-original="Criação de conteúdo para mídias digitais, TV, e OOH." data-rationale="Campanhas focadas em confiança e inovação.">Criação de conteúdo para mídias digitais, TV, e OOH.</td>
+                <td>Engajamento de 12%, 15% aumento na percepção de marca</td>
+                <td class="budget">R$ 15,000,000</td>
             </tr>
             <tr id="details1" class="expandable-row">
-                <td colspan="5" class="expandable-content">
-                    <table class="details-table">
-                        <thead>
-                            <tr>
-                                <th>Descrição</th>
-                                <th>Detalhes</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Objetivo</td>
-                                <td>Criar materiais promocionais que aumentem o awareness do Yaris Cross, destacando confiança, inovação e eficiência.</td>
-                            </tr>
-                            <tr>
-                                <td>Tarefas</td>
-                                <td>
-                                    <ul class="checklist" id="checklist1">
-                                        <li><input type="checkbox" onchange="updateProgress('progress1', 'checklist1', 'mini-progress1')"> Produção de vídeos para campanhas digitais e TV focados na confiabilidade e inovação.</li>
-                                        <li><input type="checkbox" onchange="updateProgress('progress1', 'checklist1', 'mini-progress1')"> Desenvolvimento de conteúdos para redes sociais com influenciadores confiáveis e reconhecidos no segmento automotivo.</li>
-                                        <li><input type="checkbox" onchange="updateProgress('progress1', 'checklist1', 'mini-progress1')"> Implementação de mídia programática para alcance otimizado em plataformas digitais.</li>
-                                        <li><input type="checkbox" onchange="updateProgress('progress1', 'checklist1', 'mini-progress1')"> Materiais OOH em locais estratégicos, focando em proximidade de concessionárias.</li>
-                                    </ul>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>KPIs Adicionais</td>
-                                <td>Engajamento de 12% nas redes, 25 milhões de impressões e 15% de aumento na percepção de marca.</td>
-                            </tr>
-                            <tr>
-                                <td>Budget</td>
-                                <td id="budget1-detail">Distribuído com 50% para TV, 30% digital (incluindo influenciadores) e 20% OOH.</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <td colspan="5">
+                    <ul class="checklist">
+                        <li><input type="checkbox" onchange="updateProgress()"> Produção de vídeos para TV focados na confiabilidade.</li>
+                        <li><input type="checkbox" onchange="updateProgress()"> Conteúdo para redes sociais com influenciadores reconhecidos.</li>
+                        <li><input type="checkbox" onchange="updateProgress()"> Implementação de mídia programática para alcance otimizado.</li>
+                    </ul>
                 </td>
             </tr>
 
-            <!-- Planejamento Logístico do Evento -->
+            <!-- Action 2 -->
             <tr class="clickable" onclick="toggleDetails('details2')">
                 <td>Nov 2024</td>
-                <td>Planejamento logístico do evento
-                    <div class="progress">
-                        <div class="progress-bar" id="mini-progress2" style="width: 0%;"></div>
-                    </div>
-                </td>
-                <td class="flip-content" data-rationale="Investimento em logística para garantir qualidade e experiência premium, aumentando a percepção positiva do lançamento.">Logística completa, incluindo convites e coordenação de transporte.</td>
-                <td>100% de conformidade logística e feedback positivo.</td>
-                <td class="toggle-content" id="budget2">R$ 5,000,000</td>
+                <td>Planejamento logístico do evento</td>
+                <td class="toggle-content" data-original="Organização de convites e transporte VIP." data-rationale="Foco em logística premium para experiência positiva.">Organização de convites e transporte VIP.</td>
+                <td>Taxa de presença de 90%, feedback positivo</td>
+                <td class="budget">R$ 5,000,000</td>
             </tr>
             <tr id="details2" class="expandable-row">
-                <td colspan="5" class="expandable-content">
-                    <table class="details-table">
-                        <thead>
-                            <tr>
-                                <th>Descrição</th>
-                                <th>Detalhes</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Objetivo</td>
-                                <td>Garantir que o evento de pré-lançamento transmita a experiência premium e a confiabilidade associada à Toyota.</td>
-                            </tr>
-                            <tr>
-                                <td>Tarefas</td>
-                                <td>
-                                    <ul class="checklist" id="checklist2">
-                                        <li><input type="checkbox" onchange="updateProgress('progress2', 'checklist2', 'mini-progress2')"> Envio de convites personalizados para influenciadores e mídia.</li>
-                                        <li><input type="checkbox" onchange="updateProgress('progress2', 'checklist2', 'mini-progress2')"> Organização de transporte premium e treinamento da equipe de recepção.</li>
-                                    </ul>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>KPIs Adicionais</td>
-                                <td>Taxa de presença de 90%, e avaliação positiva do evento por 95% dos participantes.</td>
-                            </tr>
-                            <tr>
-                                <td>Budget</td>
-                                <td id="budget2-detail">Alocado para convites (30%), transporte VIP (50%), e treinamento (20%).</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <td colspan="5">
+                    <ul class="checklist">
+                        <li><input type="checkbox" onchange="updateProgress()"> Envio de convites personalizados.</li>
+                        <li><input type="checkbox" onchange="updateProgress()"> Transporte premium e recepção.</li>
+                    </ul>
                 </td>
             </tr>
 
-            <!-- Evento de Pré-Lançamento -->
+            <!-- Action 3 -->
             <tr class="clickable" onclick="toggleDetails('details3')">
                 <td>Dez 2024</td>
-                <td>Evento de pré-lançamento
-                    <div class="progress">
-                        <div class="progress-bar" id="mini-progress3" style="width: 0%;"></div>
-                    </div>
-                </td>
-                <td class="flip-content" data-rationale="Experiências interativas e demonstrações ao vivo elevam o engajamento do público e aumentam a cobertura midiática.">Evento exclusivo com demonstrações ao vivo e cobertura midiática.</td>
-                <td>50 convidados VIPs, 15 veículos de mídia cobrindo o evento.</td>
-                <td class="toggle-content" id="budget3">R$ 15,000,000</td>
+                <td>Evento de pré-lançamento</td>
+                <td class="toggle-content" data-original="Evento exclusivo com demonstrações ao vivo." data-rationale="Demonstrações e experiências ao vivo para engajamento.">Evento exclusivo com demonstrações ao vivo.</td>
+                <td>Engajamento de 20%, 50 mil visualizações</td>
+                <td class="budget">R$ 15,000,000</td>
             </tr>
             <tr id="details3" class="expandable-row">
-                <td colspan="5" class="expandable-content">
-                    <table class="details-table">
-                        <thead>
-                            <tr>
-                                <th>Descrição</th>
-                                <th>Detalhes</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Objetivo</td>
-                                <td>Gerar buzz positivo e coberturas midiáticas que destacam a inovação do Yaris Cross.</td>
-                            </tr>
-                            <tr>
-                                <td>Tarefas</td>
-                                <td>
-                                    <ul class="checklist" id="checklist3">
-                                        <li><input type="checkbox" onchange="updateProgress('progress3', 'checklist3', 'mini-progress3')"> Test-drives e demonstrações ao vivo do modelo híbrido.</li>
-                                        <li><input type="checkbox" onchange="updateProgress('progress3', 'checklist3', 'mini-progress3')"> Espaços interativos e experiências com realidade aumentada.</li>
-                                    </ul>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>KPIs Adicionais</td>
-                                <td>Engajamento de 20% nas redes e 50 mil visualizações em transmissões ao vivo.</td>
-                            </tr>
-                            <tr>
-                                <td>Budget</td>
-                                <td id="budget3-detail">Distribuído entre experiências de realidade aumentada (30%), demonstrações ao vivo (50%), e interações midiáticas (20%).</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <td colspan="5">
+                    <ul class="checklist">
+                        <li><input type="checkbox" onchange="updateProgress()"> Test-drives e demonstrações ao vivo.</li>
+                        <li><input type="checkbox" onchange="updateProgress()"> Espaços interativos e realidade aumentada.</li>
+                    </ul>
                 </td>
             </tr>
 
-            <!-- Lançamento Oficial do SUV-B -->
+            <!-- Action 4 -->
             <tr class="clickable" onclick="toggleDetails('details4')">
                 <td>Jan 2025</td>
-                <td>Lançamento oficial do SUV-B
-                    <div class="progress">
-                        <div class="progress-bar" id="mini-progress4" style="width: 0%;"></div>
-                    </div>
-                </td>
-                <td class="flip-content" data-rationale="As campanhas de mídia integrada, test-drives e ativações em concessionárias visam maximizar as vendas e engajamento do consumidor.">Ativações em concessionárias e campanhas de mídia integrada.</td>
-                <td>6 mil unidades vendidas, aumento de 30% nas visitas.</td>
-                <td class="toggle-content" id="budget4">R$ 24,000,000</td>
+                <td>Lançamento oficial</td>
+                <td class="toggle-content" data-original="Ativações em concessionárias e campanhas integradas." data-rationale="Test-drives e ativações para maximizar vendas.">Ativações em concessionárias e campanhas integradas.</td>
+                <td>6 mil unidades vendidas, 30% aumento nas visitas</td>
+                <td class="budget">R$ 24,000,000</td>
             </tr>
             <tr id="details4" class="expandable-row">
-                <td colspan="5" class="expandable-content">
-                    <table class="details-table">
-                        <thead>
-                            <tr>
-                                <th>Descrição</th>
-                                <th>Detalhes</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Objetivo</td>
-                                <td>Maximizar as vendas e consolidar o Yaris Cross como líder de mercado.</td>
-                            </tr>
-                            <tr>
-                                <td>Tarefas</td>
-                                <td>
-                                    <ul class="checklist" id="checklist4">
-                                        <li><input type="checkbox" onchange="updateProgress('progress4', 'checklist4', 'mini-progress4')"> Campanhas de mídia com foco em TV, rádio, digital e OOH.</li>
-                                        <li><input type="checkbox" onchange="updateProgress('progress4', 'checklist4', 'mini-progress4')"> Promoções especiais e test-drives nas principais concessionárias.</li>
-                                        <li><input type="checkbox" onchange="updateProgress('progress4', 'checklist4', 'mini-progress4')"> Parcerias com fintechs para condições de financiamento vantajosas.</li>
-                                        <li><input type="checkbox" onchange="updateProgress('progress4', 'checklist4', 'mini-progress4')"> Estandes personalizados com QR codes para engajamento digital direto.</li>
-                                    </ul>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>KPIs Adicionais</td>
-                                <td>Vendas de 6 mil unidades, aumento de 30% nas visitas às concessionárias e 25% de market share.</td>
-                            </tr>
-                            <tr>
-                                <td>Budget</td>
-                                <td id="budget4-detail">Distribuído para campanhas (50%), ativações em concessionárias (30%), e tecnologia de engajamento (20%).</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <td colspan="5">
+                    <ul class="checklist">
+                        <li><input type="checkbox" onchange="updateProgress()"> Campanhas de mídia em TV, rádio, digital e OOH.</li>
+                        <li><input type="checkbox" onchange="updateProgress()"> Test-drives e promoções em concessionárias.</li>
+                    </ul>
                 </td>
             </tr>
         </tbody>
     </table>
 </div>
 
-<!-- Watermark -->
 <div class="watermark">
     © Guilherme Marangon - Apresentação em 02/10/2024
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2/dist/umd/popper.min.js"></script>
-<script src="https://unpkg.com/tippy.js@6"></script>
 <script>
-    // Function to update budgets based on total budget input
-    function updateBudgets() {
-        const totalBudget = parseFloat(document.getElementById('total-budget').value.replace(/,/g, '')) || 0;
-        const budget1 = (totalBudget * 0.2542).toFixed(2); // 25.42% of total
-        const budget2 = (totalBudget * 0.0847).toFixed(2); // 8.47% of total
-        const budget3 = (totalBudget * 0.2542).toFixed(2); // 25.42% of total
-        const budget4 = (totalBudget * 0.4069).toFixed(2); // 40.69% of total
-
-        document.getElementById('budget1').textContent = `R$ ${formatNumber(budget1)}`;
-        document.getElementById('budget2').textContent = `R$ ${formatNumber(budget2)}`;
-        document.getElementById('budget3').textContent = `R$ ${formatNumber(budget3)}`;
-        document.getElementById('budget4').textContent = `R$ ${formatNumber(budget4)}`;
-    }
-
-    // Function to format numbers with commas for better readability
-    function formatNumber(value) {
-        return new Intl.NumberFormat('pt-BR').format(value);
-    }
-
-    // Function to format input values while typing
-    function formatAndUpdateBudget(input) {
-        const value = input.value.replace(/[^\d]/g, '');
-        input.value = new Intl.NumberFormat('pt-BR').format(value);
-        updateBudgets();
+    function updateProgress() {
+        const allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
+        const completedTasks = Array.from(allCheckboxes).filter(box => box.checked).length;
+        const totalTasks = allCheckboxes.length;
+        const progressPercentage = (completedTasks / totalTasks) * 100;
+        document.getElementById('main-progress-bar').style.width = progressPercentage + '%';
     }
 
     function toggleDetails(id) {
         const row = document.getElementById(id);
         const allRows = document.querySelectorAll('.expandable-row');
-        allRows.forEach((r) => {
+        allRows.forEach(r => {
             if (r.id !== id) r.style.display = 'none';
         });
         row.style.display = row.style.display === 'table-row' ? 'none' : 'table-row';
-        const allClickable = document.querySelectorAll('.clickable');
-        allClickable.forEach((c) => c.classList.remove('selected'));
-        if (row.style.display === 'table-row') {
-            row.previousElementSibling.classList.add('selected');
-        }
     }
 
-    // Function to toggle between action details and rationale when clicking a row
-    document.querySelectorAll('.flip-content').forEach(item => {
-        item.addEventListener('click', () => {
-            const originalText = item.textContent;
-            const rationale = item.getAttribute('data-rationale');
-            item.textContent = item.textContent === rationale ? originalText : rationale;
+    function updateBudget() {
+        const totalBudget = parseFloat(document.getElementById('total-budget').value.replace(/,/g, '')) || 0;
+        const budgetDistribution = [0.2542, 0.0847, 0.2542, 0.4069]; // Percentages
+        const budgetElements = document.querySelectorAll('.budget');
+        budgetElements.forEach((el, index) => {
+            const allocatedBudget = (totalBudget * budgetDistribution[index]).toFixed(2);
+            el.textContent = `R$ ${formatNumber(allocatedBudget)}`;
+        });
+    }
+
+    function formatNumber(value) {
+        return new Intl.NumberFormat('pt-BR').format(value);
+    }
+
+    document.querySelectorAll('.toggle-content').forEach(content => {
+        content.addEventListener('click', function() {
+            const original = this.getAttribute('data-original');
+            const rationale = this.getAttribute('data-rationale');
+            this.textContent = this.textContent === rationale ? original : rationale;
         });
     });
 
-    function updateProgress(progressId, checklistId, miniProgressId) {
-        const checklist = document.getElementById(checklistId);
-        const tasks = checklist.querySelectorAll('input[type="checkbox"]');
-        const completedTasks = Array.from(tasks).filter(task => task.checked).length;
-        const progressBar = document.getElementById(progressId).querySelector('.progress-bar');
-        const miniProgressBar = document.getElementById(miniProgressId);
-        const progressPercent = (completedTasks / tasks.length) * 100;
-        progressBar.style.width = progressPercent + '%';
-        miniProgressBar.style.width = progressPercent + '%';
-        updateMainProgress();
-    }
-
-    function updateMainProgress() {
-        const allMiniBars = document.querySelectorAll('.progress-bar');
-        let totalProgress = 0;
-        let count = 0;
-        allMiniBars.forEach(bar => {
-            if (bar.id.startsWith('mini-progress')) {
-                totalProgress += parseFloat(bar.style.width);
-                count++;
-            }
-        });
-        const mainProgress = document.getElementById('main-progress-bar');
-        const mainProgressPercent = totalProgress / count;
-        mainProgress.style.width = mainProgressPercent + '%';
-    }
-
-    // Initialize tooltips for icons
-    tippy('.tooltip-icon', {
-        content: 'More information',
-        placement: 'top',
-        arrow: true,
-    });
-
-    // Initial budget update
-    updateBudgets();
+    updateProgress();
 </script>
 
 </body>
