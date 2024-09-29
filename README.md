@@ -1,14 +1,14 @@
 ------------------------------ 
 Plano Estratégio de Marketing
 
+-------------------
+para TOYOTA BRASIL
+
+------------------------
+por GUILHERME MARANGON
+
 --------------
-Toyota Brasil
-
---------------------
-Guilherme Marangon
-
-------------
-02/10/2024
+em 02/10/2024
 
 ----
 =)
