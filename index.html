@@ -1,354 +1,203 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Plano Estratégico de Marketing - Cronograma de Ações</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
-            color: #333;
-            padding: 20px;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
         }
+
         header {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-bottom: 2px solid #D71921;
-            padding-bottom: 15px;
+            background-color: #ed1c24;
+            color: white;
+            padding: 20px;
+            text-align: center;
         }
-        .logo {
-            width: 60px;
-            margin-right: 15px;
+
+        header h1 {
+            margin: 0;
         }
-        h1 {
-            font-size: 22px;
-            color: #D71921;
+
+        .container {
+            width: 90%;
+            margin: 20px auto;
         }
-        .progress-container {
-            margin: 15px auto;
-            width: 100%;
-            max-width: 800px;
+
+        h2 {
+            color: #ed1c24;
         }
-        .main-progress {
-            height: 10px;
-            background-color: #e0e0e0;
-            border-radius: 5px;
-        }
-        .progress-bar {
-            height: 100%;
-            background-color: #D71921;
-            width: 0;
-            transition: width 0.3s ease;
-        }
+
         table {
             width: 100%;
-            margin-top: 20px;
             border-collapse: collapse;
-            background-color: #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
         }
+
         th, td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
+            padding: 15px;
+            border: 1px solid #ccc;
         }
+
         th {
-            background-color: #D71921;
-            color: #fff;
+            background-color: #f4f4f9;
+            text-align: left;
         }
-        tr:hover {
-            background-color: #f0f0f0;
+
+        .budget, .kpi {
+            color: #ed1c24;
+            font-weight: bold;
         }
-        .clickable {
-            cursor: pointer;
+
+        .checklist-container {
+            margin-bottom: 20px;
         }
-        .expandable-row {
-            display: none;
-        }
-        .toggle-content {
-            color: #007bff;
-            cursor: pointer;
-        }
+
         .checklist {
             list-style: none;
             padding: 0;
         }
+
         .checklist li {
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
+            margin-bottom: 10px;
         }
-        .checklist input {
+
+        .checklist input[type="checkbox"] {
             margin-right: 10px;
-            transform: scale(1.2);
         }
-        .watermark {
-            text-align: right;
-            font-size: 12px;
-            color: rgba(0, 0, 0, 0.1);
-            margin-top: 20px;
+
+        .progress-bar {
+            height: 20px;
+            background-color: #ccc;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress {
+            height: 100%;
+            background-color: #ed1c24;
+            width: 0;
+            border-radius: 10px;
+            text-align: center;
+            color: white;
+            line-height: 20px;
+        }
+
+        .progress-label {
+            font-weight: bold;
+        }
+
+        footer {
+            background-color: #ed1c24;
+            color: white;
+            padding: 10px;
+            text-align: center;
         }
     </style>
+    <script>
+        // Função para atualizar a barra de progresso
+        function updateProgressBar() {
+            const checkboxes = document.querySelectorAll('.checklist input[type="checkbox"]');
+            const progressBar = document.querySelector('.progress');
+            const total = checkboxes.length;
+            let checked = 0;
+
+            checkboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    checked++;
+                }
+            });
+
+            const progress = (checked / total) * 100;
+            progressBar.style.width = progress + '%';
+            progressBar.innerText = Math.round(progress) + '%';
+        }
+
+        // Adiciona um event listener para cada checkbox
+        window.addEventListener('DOMContentLoaded', () => {
+            const checkboxes = document.querySelectorAll('.checklist input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', updateProgressBar);
+            });
+        });
+    </script>
 </head>
 <body>
 
 <header>
-    <img src="toyota-logo.png" alt="Toyota Logo" class="logo">
     <h1>Plano Estratégico de Marketing - Cronograma de Ações</h1>
 </header>
 
-<div class="progress-container">
-    <div class="main-progress">
-        <div class="progress-bar" id="main-progress-bar"></div>
+<div class="container">
+
+    <h2>Etapas do Plano</h2>
+
+    <div class="checklist-container">
+        <ul class="checklist">
+            <li>
+                <input type="checkbox" id="etapa1">
+                <label for="etapa1"><strong>Outubro 2024 - Planejamento e Solicitações</strong></label>
+                <ul>
+                    <li>07/10/2024 - Solicitação de cotações para agências de eventos - Budget: R$ 50K</li>
+                    <li>09/10/2024 - Avaliação preliminar das propostas - Meta: 5 propostas recebidas</li>
+                    <li>13/10/2024 - Reunião de avaliação final das cotações - Meta: Seleção de 3 agências</li>
+                </ul>
+            </li>
+
+            <li>
+                <input type="checkbox" id="etapa2">
+                <label for="etapa2"><strong>Novembro 2024 - Contratação de Agências e Início das Campanhas</strong></label>
+                <ul>
+                    <li>01/11/2024 - Início da campanha de TV (Globo, SBT, Record) - Budget: R$ 10M</li>
+                    <li>02/11/2024 - Início da campanha digital (Google, Facebook, Instagram) - Budget: R$ 10M</li>
+                    <li>03/11/2024 - Publicação de outdoors em SP e RJ - Budget: R$ 6M</li>
+                </ul>
+            </li>
+
+            <li>
+                <input type="checkbox" id="etapa3">
+                <label for="etapa3"><strong>Dezembro 2024 - Evento de Lançamento e Preparação das Concessionárias</strong></label>
+                <ul>
+                    <li>08/12/2024 - Evento de lançamento para a imprensa - Budget: R$ 1.5M</li>
+                    <li>09/12/2024 - Evento de lançamento para concessionárias - Budget: R$ 1.5M</li>
+                </ul>
+            </li>
+
+            <li>
+                <input type="checkbox" id="etapa4">
+                <label for="etapa4"><strong>Janeiro 2025 - Ativações nas Concessionárias e Promoções</strong></label>
+                <ul>
+                    <li>01/01/2025 - Início dos test-drives nas concessionárias - Budget: R$ 8M</li>
+                    <li>02/01/2025 - Ativações de promoções nas concessionárias - Meta: 5 mil test-drives agendados</li>
+                </ul>
+            </li>
+
+            <li>
+                <input type="checkbox" id="etapa5">
+                <label for="etapa5"><strong>Fevereiro-Março 2025 - Ações Contínuas de Conversão</strong></label>
+                <ul>
+                    <li>01/02/2025 - Acompanhamento contínuo de conversão nas concessionárias</li>
+                    <li>05/02/2025 - Análise de impacto das promoções</li>
+                    <li>31/03/2025 - Finalização das campanhas e relatório final</li>
+                </ul>
+            </li>
+        </ul>
     </div>
+
+    <div class="progress-bar">
+        <div class="progress">0%</div>
+    </div>
+
 </div>
 
-<!-- Budget Input -->
-<div style="text-align: center; margin-top: 20px;">
-    <label for="total-budget">Orçamento Total: R$</label>
-    <input type="text" id="total-budget" value="59,000,000" oninput="updateBudget()">
-</div>
-
-<div class="table-container">
-    <table>
-        <thead>
-            <tr>
-                <th>Data</th>
-                <th>Atividade</th>
-                <th>Responsável</th>
-                <th>Target</th>
-                <th>Entregável</th>
-                <th>Budget</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Outubro 2024 -->
-            <tr><td colspan="6"><strong>Outubro 2024 - Planejamento e Solicitações</strong></td></tr>
-            <tr class="clickable">
-                <td>07/10/2024</td>
-                <td>Solicitação de cotações para agências de eventos</td>
-                <td>Time de Marketing Toyota</td>
-                <td>Fornecedores e agências</td>
-                <td>Cotações solicitadas e recebidas</td>
-                <td class="budget">R$ 50K</td>
-            </tr>
-            <tr class="expandable-row">
-                <td colspan="6">
-                    <ul class="checklist">
-                        <li><input type="checkbox" class="task"> Solicitar propostas das agências de eventos</li>
-                        <li><input type="checkbox" class="task"> Confirmar o recebimento de cotações</li>
-                    </ul>
-                </td>
-            </tr>
-            <tr class="clickable">
-                <td>08/10/2024</td>
-                <td>Acompanhamento das cotações recebidas</td>
-                <td>Time de Marketing & Compras</td>
-                <td>Interno</td>
-                <td>Atualização das cotações</td>
-                <td>-</td>
-            </tr>
-            <tr class="expandable-row">
-                <td colspan="6">
-                    <ul class="checklist">
-                        <li><input type="checkbox" class="task"> Revisar as cotações recebidas</li>
-                        <li><input type="checkbox" class="task"> Solicitar ajustes, se necessário</li>
-                    </ul>
-                </td>
-            </tr>
-            <tr class="clickable">
-                <td>09/10/2024</td>
-                <td>Avaliação preliminar das propostas</td>
-                <td>Time de Marketing & Compras</td>
-                <td>Interno</td>
-                <td>Pré-seleção de propostas</td>
-                <td>-</td>
-            </tr>
-            <tr class="expandable-row">
-                <td colspan="6">
-                    <ul class="checklist">
-                        <li><input type="checkbox" class="task"> Analisar as propostas com base no custo-benefício</li>
-                        <li><input type="checkbox" class="task"> Fazer pré-seleção de três agências finalistas</li>
-                    </ul>
-                </td>
-            </tr>
-
-            <!-- Novembro 2024 -->
-            <tr><td colspan="6"><strong>Novembro 2024 - Contratação de Agências e Início das Campanhas</strong></td></tr>
-            <tr class="clickable">
-                <td>01/11/2024</td>
-                <td>Início da campanha de TV (Globo, SBT, Record)</td>
-                <td>DAVID</td>
-                <td>Público geral (30-45 anos)</td>
-                <td>Campanha de awareness lançada</td>
-                <td class="budget">R$ 10M</td>
-            </tr>
-            <tr class="expandable-row">
-                <td colspan="6">
-                    <ul class="checklist">
-                        <li><input type="checkbox" class="task"> Confirmar horário nobre nos canais de TV</li>
-                        <li><input type="checkbox" class="task"> Aprovar roteiros criativos para as peças</li>
-                    </ul>
-                </td>
-            </tr>
-            <tr class="clickable">
-                <td>02/11/2024</td>
-                <td>Início da campanha digital (Google, Facebook, Instagram)</td>
-                <td>DAVID</td>
-                <td>Público digital (30-45 anos)</td>
-                <td>Campanha digital segmentada</td>
-                <td class="budget">R$ 10M</td>
-            </tr>
-            <tr class="expandable-row">
-                <td colspan="6">
-                    <ul class="checklist">
-                        <li><input type="checkbox" class="task"> Configurar anúncios segmentados no Google</li>
-                        <li><input type="checkbox" class="task"> Publicar anúncios patrocinados nas redes sociais</li>
-                    </ul>
-                </td>
-            </tr>
-            <tr class="clickable">
-                <td>03/11/2024</td>
-                <td>Publicação de outdoors em SP e RJ</td>
-                <td>DAVID</td>
-                <td>Público em trânsito</td>
-                <td>OOH lançado em pontos estratégicos</td>
-                <td class="budget">R$ 6M</td>
-            </tr>
-            <tr class="expandable-row">
-                <td colspan="6">
-                    <ul class="checklist">
-                        <li><input type="checkbox" class="task"> Definir os locais de alta circulação para os outdoors</li>
-                        <li><input type="checkbox" class="task"> Realizar a impressão e instalação dos materiais OOH</li>
-                    </ul>
-                </td>
-            </tr>
-
-            <!-- Dezembro 2024 -->
-            <tr><td colspan="6"><strong>Dezembro 2024 - Evento de Lançamento e Preparação das Concessionárias</strong></td></tr>
-            <tr class="clickable">
-                <td>01/12/2024</td>
-                <td>Reunião de alinhamento final com agências</td>
-                <td>Time de Marketing Toyota</td>
-                <td>Interno</td>
-                <td>Planejamento detalhado para o evento</td>
-                <td>-</td>
-            </tr>
-            <tr class="expandable-row">
-                <td colspan="6">
-                    <ul class="checklist">
-                        <li><input type="checkbox" class="task"> Confirmar todos os detalhes logísticos</li>
-                        <li><input type="checkbox" class="task"> Validar roteiro do evento e ações com agências</li>
-                    </ul>
-                </td>
-            </tr>
-            <tr class="clickable">
-                <td>02/12/2024</td>
-                <td>Início da montagem do evento de lançamento</td>
-                <td>Agência de Eventos</td>
-                <td>Imprensa, concessionárias</td>
-                <td>Montagem de infraestrutura iniciada</td>
-                <td class="budget">R$ 500K</td>
-            </tr>
-            <tr class="expandable-row">
-                <td colspan="6">
-                    <ul class="checklist">
-                        <li><input type="checkbox" class="task"> Montar palcos e áreas de exposição</li>
-                        <li><input type="checkbox" class="task"> Preparar recursos audiovisuais para o evento</li>
-                    </ul>
-                </td>
-            </tr>
-
-            <!-- Janeiro 2025 -->
-            <tr><td colspan="6"><strong>Janeiro 2025 - Ativações nas Concessionárias e Promoções</strong></td></tr>
-            <tr class="clickable">
-                <td>01/01/2025</td>
-                <td>Início dos test-drives nas concessionárias</td>
-                <td>Rede de Concessionárias</td>
-                <td>Consumidores interessados</td>
-                <td>Test-drives iniciados</td>
-                <td class="budget">R$ 8M</td>
-            </tr>
-            <tr class="expandable-row">
-                <td colspan="6">
-                    <ul class="checklist">
-                        <li><input type="checkbox" class="task"> Organizar campanhas de test-drive nas principais lojas</li>
-                        <li><input type="checkbox" class="task"> Promover test-drives com clientes VIPs</li>
-                    </ul>
-                </td>
-            </tr>
-
-            <!-- Fevereiro-Março 2025 -->
-            <tr><td colspan="6"><strong>Fevereiro-Março 2025 - Ações Contínuas de Conversão</strong></td></tr>
-            <tr class="clickable">
-                <td>01/02/2025</td>
-                <td>Acompanhamento contínuo de conversão nas concessionárias</td>
-                <td>Rede de Concessionárias</td>
-                <td>Consumidores interessados</td>
-                <td>Relatórios semanais de desempenho</td>
-                <td>-</td>
-            </tr>
-            <tr class="expandable-row">
-                <td colspan="6">
-                    <ul class="checklist">
-                        <li><input type="checkbox" class="task"> Avaliar desempenho das campanhas de vendas nas lojas</li>
-                        <li><input type="checkbox" class="task"> Ajustar estratégias conforme os relatórios de desempenho</li>
-                    </ul>
-                </td>
-            </tr>
-
-        </tbody>
-    </table>
-</div>
-
-<div class="watermark">
-    © Guilherme Marangon - Apresentação em 02/10/2024
-</div>
-
-<script>
-    // Função para alternar entre linhas clicáveis e expandíveis
-    document.querySelectorAll('.clickable').forEach(function(row) {
-        row.addEventListener('click', function() {
-            const nextRow = row.nextElementSibling;
-            nextRow.style.display = (nextRow.style.display === 'table-row') ? 'none' : 'table-row';
-        });
-    });
-
-    // Função para atualizar o orçamento total
-    function updateBudget() {
-        const totalBudget = parseFloat(document.getElementById('total-budget').value.replace(/,/g, '')) || 0;
-        const budgetDistribution = [50000, 10000000, 10000000, 6000000, 500000, 1500000, 8000000]; // Distribuição orçamentária fixa
-        const budgetElements = document.querySelectorAll('.budget');
-        budgetElements.forEach((el, index) => {
-            const allocatedBudget = (totalBudget * (budgetDistribution[index] / 59000000)).toFixed(2); // Ajuste proporcional ao orçamento total
-            el.textContent = `R$ ${formatNumber(allocatedBudget)}`;
-        });
-    }
-
-    // Função para formatar números com separadores brasileiros
-    function formatNumber(value) {
-        return new Intl.NumberFormat('pt-BR').format(value);
-    }
-
-    // Atualizar barra de progresso
-    const tasks = document.querySelectorAll('.task');
-    const progressBar = document.getElementById('main-progress-bar');
-    function updateProgressBar() {
-        const completedTasks = document.querySelectorAll('.task:checked').length;
-        const totalTasks = tasks.length;
-        const progress = (completedTasks / totalTasks) * 100;
-        progressBar.style.width = progress + '%';
-    }
-    tasks.forEach(task => {
-        task.addEventListener('change', updateProgressBar);
-    });
-
-    updateBudget(); // Chamada inicial para exibir os valores corretamente
-    updateProgressBar(); // Atualizar barra de progresso ao carregar a página
-</script>
+<footer>
+    <p>&copy; 2024 Guilherme Marangon - Apresentação 02/10/2024</p>
+</footer>
 
 </body>
 </html>
