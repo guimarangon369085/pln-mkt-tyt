@@ -1,203 +1,230 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plano Estratégico de Marketing - Cronograma de Ações</title>
+    <title>Plano Estratégico de Lançamento - SUV-B Toyota</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f9;
+            background-color: #f4f4f4;
+            color: #333;
         }
-
-        header {
-            background-color: #ed1c24;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-
-        header h1 {
-            margin: 0;
-        }
-
         .container {
-            width: 90%;
-            margin: 20px auto;
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-
-        h2 {
-            color: #ed1c24;
+        h1, h2, h3 {
+            text-align: center;
+            color: #b00d0d; /* Cor da Toyota */
         }
-
-        table {
+        .progress-bar {
             width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
+            background-color: #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 20px 0;
         }
-
-        th, td {
-            padding: 15px;
-            border: 1px solid #ccc;
+        .progress {
+            height: 25px;
+            width: 0;
+            background-color: #b00d0d;
+            border-radius: 5px;
+            transition: width 0.3s;
         }
-
-        th {
-            background-color: #f4f4f9;
-            text-align: left;
-        }
-
-        .budget, .kpi {
-            color: #ed1c24;
-            font-weight: bold;
-        }
-
-        .checklist-container {
-            margin-bottom: 20px;
-        }
-
-        .checklist {
+        .task-list {
             list-style: none;
             padding: 0;
         }
-
-        .checklist li {
-            margin-bottom: 10px;
-        }
-
-        .checklist input[type="checkbox"] {
-            margin-right: 10px;
-        }
-
-        .progress-bar {
-            height: 20px;
-            background-color: #ccc;
-            border-radius: 10px;
-            overflow: hidden;
-            margin-bottom: 10px;
-        }
-
-        .progress {
-            height: 100%;
-            background-color: #ed1c24;
-            width: 0;
-            border-radius: 10px;
-            text-align: center;
-            color: white;
-            line-height: 20px;
-        }
-
-        .progress-label {
-            font-weight: bold;
-        }
-
-        footer {
-            background-color: #ed1c24;
-            color: white;
+        .task-list li {
             padding: 10px;
-            text-align: center;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+        .task-list input[type="checkbox"] {
+            transform: scale(1.5);
+        }
+        .details {
+            display: none;
+            margin-left: 20px;
+        }
+        .details.active {
+            display: block;
+        }
+        .kpi {
+            font-weight: bold;
+            color: green;
         }
     </style>
-    <script>
-        // Função para atualizar a barra de progresso
-        function updateProgressBar() {
-            const checkboxes = document.querySelectorAll('.checklist input[type="checkbox"]');
-            const progressBar = document.querySelector('.progress');
-            const total = checkboxes.length;
-            let checked = 0;
-
-            checkboxes.forEach(checkbox => {
-                if (checkbox.checked) {
-                    checked++;
-                }
-            });
-
-            const progress = (checked / total) * 100;
-            progressBar.style.width = progress + '%';
-            progressBar.innerText = Math.round(progress) + '%';
-        }
-
-        // Adiciona um event listener para cada checkbox
-        window.addEventListener('DOMContentLoaded', () => {
-            const checkboxes = document.querySelectorAll('.checklist input[type="checkbox"]');
-            checkboxes.forEach(checkbox => {
-                checkbox.addEventListener('change', updateProgressBar);
-            });
-        });
-    </script>
 </head>
 <body>
+    <div class="container">
+        <h1>Plano Estratégico de Lançamento - SUV-B Toyota</h1>
+        <p>Este é o plano completo com ações, orçamento, KPIs e justificativas. O progresso será atualizado automaticamente à medida que as tarefas forem concluídas.</p>
 
-<header>
-    <h1>Plano Estratégico de Marketing - Cronograma de Ações</h1>
-</header>
+        <!-- Barra de Progresso Geral -->
+        <div class="progress-bar">
+            <div class="progress" id="overallProgress"></div>
+        </div>
 
-<div class="container">
-
-    <h2>Etapas do Plano</h2>
-
-    <div class="checklist-container">
-        <ul class="checklist">
-            <li>
-                <input type="checkbox" id="etapa1">
-                <label for="etapa1"><strong>Outubro 2024 - Planejamento e Solicitações</strong></label>
-                <ul>
-                    <li>07/10/2024 - Solicitação de cotações para agências de eventos - Budget: R$ 50K</li>
-                    <li>09/10/2024 - Avaliação preliminar das propostas - Meta: 5 propostas recebidas</li>
-                    <li>13/10/2024 - Reunião de avaliação final das cotações - Meta: Seleção de 3 agências</li>
-                </ul>
+        <!-- Lista de Tarefas Interativa -->
+        <h2>Outubro 2024 - Planejamento e Solicitações</h2>
+        <ul class="task-list">
+            <li onclick="toggleDetails(this)">
+                Solicitação de cotações para agências de eventos
+                <input type="checkbox" onclick="event.stopPropagation(); updateProgress()">
+                <div class="details">
+                    <p>Budget: R$ 50K</p>
+                    <p>KPI: 5 cotações recebidas</p>
+                    <p>Justificativa: A seleção das agências garante maior controle sobre o custo-benefício.</p>
+                </div>
             </li>
-
-            <li>
-                <input type="checkbox" id="etapa2">
-                <label for="etapa2"><strong>Novembro 2024 - Contratação de Agências e Início das Campanhas</strong></label>
-                <ul>
-                    <li>01/11/2024 - Início da campanha de TV (Globo, SBT, Record) - Budget: R$ 10M</li>
-                    <li>02/11/2024 - Início da campanha digital (Google, Facebook, Instagram) - Budget: R$ 10M</li>
-                    <li>03/11/2024 - Publicação de outdoors em SP e RJ - Budget: R$ 6M</li>
-                </ul>
+            <li onclick="toggleDetails(this)">
+                Avaliação preliminar das propostas
+                <input type="checkbox" onclick="event.stopPropagation(); updateProgress()">
+                <div class="details">
+                    <p>3 agências pré-selecionadas com base em desempenho e custo</p>
+                    <p>Justificativa: Pré-seleção acelera o processo de contratação.</p>
+                </div>
             </li>
-
-            <li>
-                <input type="checkbox" id="etapa3">
-                <label for="etapa3"><strong>Dezembro 2024 - Evento de Lançamento e Preparação das Concessionárias</strong></label>
-                <ul>
-                    <li>08/12/2024 - Evento de lançamento para a imprensa - Budget: R$ 1.5M</li>
-                    <li>09/12/2024 - Evento de lançamento para concessionárias - Budget: R$ 1.5M</li>
-                </ul>
+            <li onclick="toggleDetails(this)">
+                Reunião de avaliação final das cotações
+                <input type="checkbox" onclick="event.stopPropagation(); updateProgress()">
+                <div class="details">
+                    <p>Seleção final da agência</p>
+                    <p>Justificativa: Definir a agência que melhor se alinha ao planejamento estratégico.</p>
+                </div>
             </li>
+        </ul>
 
-            <li>
-                <input type="checkbox" id="etapa4">
-                <label for="etapa4"><strong>Janeiro 2025 - Ativações nas Concessionárias e Promoções</strong></label>
-                <ul>
-                    <li>01/01/2025 - Início dos test-drives nas concessionárias - Budget: R$ 8M</li>
-                    <li>02/01/2025 - Ativações de promoções nas concessionárias - Meta: 5 mil test-drives agendados</li>
-                </ul>
+        <h2>Novembro 2024 - Contratação e Início das Campanhas</h2>
+        <ul class="task-list">
+            <li onclick="toggleDetails(this)">
+                Início da campanha de TV (Globo, SBT, Record)
+                <input type="checkbox" onclick="event.stopPropagation(); updateProgress()">
+                <div class="details">
+                    <p>Budget: R$ 10M</p>
+                    <p>KPI: 70% de alcance do público-alvo</p>
+                    <p>Justificativa: A TV aberta alcança mais de 50% do público no Brasil.</p>
+                </div>
             </li>
+            <li onclick="toggleDetails(this)">
+                Início da campanha digital (Google, Facebook, Instagram)
+                <input type="checkbox" onclick="event.stopPropagation(); updateProgress()">
+                <div class="details">
+                    <p>Budget: R$ 10M</p>
+                    <p>KPI: 1.8 milhões de impressões</p>
+                    <p>Justificativa: Foco em públicos-alvo que pesquisam online antes de comprar.</p>
+                </div>
+            </li>
+            <li onclick="toggleDetails(this)">
+                Publicação de outdoors em SP e RJ
+                <input type="checkbox" onclick="event.stopPropagation(); updateProgress()">
+                <div class="details">
+                    <p>Budget: R$ 6M</p>
+                    <p>KPI: 85-90% de ocupação de espaços publicitários</p>
+                    <p>Justificativa: Outdoors em SP e RJ captam grande tráfego em áreas urbanas.</p>
+                </div>
+            </li>
+        </ul>
 
-            <li>
-                <input type="checkbox" id="etapa5">
-                <label for="etapa5"><strong>Fevereiro-Março 2025 - Ações Contínuas de Conversão</strong></label>
-                <ul>
-                    <li>01/02/2025 - Acompanhamento contínuo de conversão nas concessionárias</li>
-                    <li>05/02/2025 - Análise de impacto das promoções</li>
-                    <li>31/03/2025 - Finalização das campanhas e relatório final</li>
-                </ul>
+        <h2>Dezembro 2024 - Evento de Lançamento</h2>
+        <ul class="task-list">
+            <li onclick="toggleDetails(this)">
+                Evento de lançamento para a imprensa
+                <input type="checkbox" onclick="event.stopPropagation(); updateProgress()">
+                <div class="details">
+                    <p>Budget: R$ 1.5M</p>
+                    <p>KPI: 100% de cobertura midiática</p>
+                    <p>Justificativa: O evento gerará ampla visibilidade na mídia e redes sociais.</p>
+                </div>
             </li>
+            <li onclick="toggleDetails(this)">
+                Evento de lançamento para concessionárias
+                <input type="checkbox" onclick="event.stopPropagation(); updateProgress()">
+                <div class="details">
+                    <p>Budget: R$ 1.5M</p>
+                    <p>KPI: 100% de adesão dos vendedores</p>
+                    <p>Justificativa: Treinamento e test-drives são cruciais para o sucesso de vendas.</p>
+                </div>
+            </li>
+        </ul>
+
+        <h2>Janeiro 2025 - Ativações e Test-Drives</h2>
+        <ul class="task-list">
+            <li onclick="toggleDetails(this)">
+                Início dos test-drives nas concessionárias
+                <input type="checkbox" onclick="event.stopPropagation(); updateProgress()">
+                <div class="details">
+                    <p>Budget: R$ 8M</p>
+                    <p>KPI: 5 mil test-drives agendados</p>
+                    <p>Justificativa: Test-drives aumentam a conversão em 12-15%.</p>
+                </div>
+            </li>
+            <li onclick="toggleDetails(this)">
+                Ativações de promoções nas concessionárias
+                <input type="checkbox" onclick="event.stopPropagation(); updateProgress()">
+                <div class="details">
+                    <p>KPI: Aumento de 20% no tráfego nas lojas</p>
+                    <p>Justificativa: Promoções atraem consumidores adicionais para as lojas.</p>
+                </div>
+            </li>
+        </ul>
+
+        <h2>Fevereiro-Março 2025 - Acompanhamento e Conversão</h2>
+        <ul class="task-list">
+            <li onclick="toggleDetails(this)">
+                Acompanhamento contínuo de conversão nas concessionárias
+                <input type="checkbox" onclick="event.stopPropagation(); updateProgress()">
+                <div class="details">
+                    <p>KPI: 12% de conversão nos test-drives</p>
+                    <p>Justificativa: Acompanhamento contínuo ajuda a otimizar a conversão.</p>
+                </div>
+            </li>
+            <li onclick="toggleDetails(this)">
+                Segunda avaliação de KPIs de conversão
+                <input type="checkbox" onclick="event.stopPropagation(); updateProgress()">
+                <div class="details">
+                    <p>KPI: 15% de conversão geral</p>
+                    <p>Justificativa: Ajustes contínuos garantem o alcance das metas de vendas.</p>
+                </div>
+            </li>
+        </ul>
+
+        <h2>Resumo do Budget Total</h2>
+        <p><strong>Total: R$ 59M</strong></p>
+        <ul>
+            <li>Lançamento do SUV-B (Awareness e Consideração): R$ 30M</li>
+            <li>Proteção do Segmento de Híbridos (Comparação e Promoção): R$ 15M</li>
+            <li>Ativações e Conversões (Test-Drives e Promoções): R$ 8M</li>
         </ul>
     </div>
 
-    <div class="progress-bar">
-        <div class="progress">0%</div>
-    </div>
+    <!-- Script para Atualizar o Progresso e Expandir Linhas -->
+    <script>
+        function updateProgress() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const total = checkboxes.length;
+            let completed = 0;
+            checkboxes.forEach(checkbox => {
+                if (checkbox.checked) completed++;
+            });
+            const progress = (completed / total) * 100;
+            document.getElementById('overallProgress').style.width = progress + '%';
+        }
 
-</div>
-
-<footer>
-    <p>&copy; 2024 Guilherme Marangon - Apresentação 02/10/2024</p>
-</footer>
-
+        function toggleDetails(element) {
+            const details = element.querySelector('.details');
+            if (details) {
+                details.classList.toggle('active');
+            }
+        }
+    </script>
 </body>
 </html>
