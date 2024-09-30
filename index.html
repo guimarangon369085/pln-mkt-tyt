@@ -29,180 +29,86 @@
             margin: 20px 0;
         }
         .progress {
-            height: 25px;
-            width: 0;
-            background-color: #b00d0d;
+            height: 20px;
+            background-color: #b00d0d; /* Cor da Toyota */
+            width: 0%;
             border-radius: 5px;
             transition: width 0.3s;
         }
-        .task-list {
-            list-style: none;
-            padding: 0;
-        }
-        .task-list li {
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-        }
-        .task-list input[type="checkbox"] {
-            transform: scale(1.5);
-        }
         .details {
             display: none;
-            margin-left: 20px;
         }
         .details.active {
             display: block;
+            padding: 10px 0;
         }
-        .kpi {
-            font-weight: bold;
-            color: green;
+        input[type="checkbox"] {
+            margin-right: 10px;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Plano Estratégico de Lançamento - SUV-B Toyota</h1>
-        <p>Este é o plano completo com ações, orçamento, KPIs e justificativas. O progresso será atualizado automaticamente à medida que as tarefas forem concluídas.</p>
 
-        <!-- Barra de Progresso Geral -->
+        <!-- Barra de progresso geral -->
         <div class="progress-bar">
-            <div class="progress" id="overallProgress"></div>
+            <div id="overallProgress" class="progress"></div>
         </div>
 
-        <!-- Lista de Tarefas Interativa -->
-        <h2>Outubro 2024 - Planejamento e Solicitações</h2>
-        <ul class="task-list">
-            <li onclick="toggleDetails(this)">
-                Solicitação de cotações para agências de eventos
-                <input type="checkbox" onclick="event.stopPropagation(); updateProgress()">
-                <div class="details">
-                    <p>Budget: R$ 50K</p>
-                    <p>KPI: 5 cotações recebidas</p>
-                    <p>Justificativa: A seleção das agências garante maior controle sobre o custo-benefício.</p>
-                </div>
-            </li>
-            <li onclick="toggleDetails(this)">
-                Avaliação preliminar das propostas
-                <input type="checkbox" onclick="event.stopPropagation(); updateProgress()">
-                <div class="details">
-                    <p>3 agências pré-selecionadas com base em desempenho e custo</p>
-                    <p>Justificativa: Pré-seleção acelera o processo de contratação.</p>
-                </div>
-            </li>
-            <li onclick="toggleDetails(this)">
-                Reunião de avaliação final das cotações
-                <input type="checkbox" onclick="event.stopPropagation(); updateProgress()">
-                <div class="details">
-                    <p>Seleção final da agência</p>
-                    <p>Justificativa: Definir a agência que melhor se alinha ao planejamento estratégico.</p>
-                </div>
-            </li>
-        </ul>
-
-        <h2>Novembro 2024 - Contratação e Início das Campanhas</h2>
-        <ul class="task-list">
-            <li onclick="toggleDetails(this)">
-                Início da campanha de TV (Globo, SBT, Record)
-                <input type="checkbox" onclick="event.stopPropagation(); updateProgress()">
-                <div class="details">
-                    <p>Budget: R$ 10M</p>
-                    <p>KPI: 70% de alcance do público-alvo</p>
-                    <p>Justificativa: A TV aberta alcança mais de 50% do público no Brasil.</p>
-                </div>
-            </li>
-            <li onclick="toggleDetails(this)">
-                Início da campanha digital (Google, Facebook, Instagram)
-                <input type="checkbox" onclick="event.stopPropagation(); updateProgress()">
-                <div class="details">
-                    <p>Budget: R$ 10M</p>
-                    <p>KPI: 1.8 milhões de impressões</p>
-                    <p>Justificativa: Foco em públicos-alvo que pesquisam online antes de comprar.</p>
-                </div>
-            </li>
-            <li onclick="toggleDetails(this)">
-                Publicação de outdoors em SP e RJ
-                <input type="checkbox" onclick="event.stopPropagation(); updateProgress()">
-                <div class="details">
-                    <p>Budget: R$ 6M</p>
-                    <p>KPI: 85-90% de ocupação de espaços publicitários</p>
-                    <p>Justificativa: Outdoors em SP e RJ captam grande tráfego em áreas urbanas.</p>
-                </div>
-            </li>
-        </ul>
-
-        <h2>Dezembro 2024 - Evento de Lançamento</h2>
-        <ul class="task-list">
-            <li onclick="toggleDetails(this)">
-                Evento de lançamento para a imprensa
-                <input type="checkbox" onclick="event.stopPropagation(); updateProgress()">
-                <div class="details">
-                    <p>Budget: R$ 1.5M</p>
-                    <p>KPI: 100% de cobertura midiática</p>
-                    <p>Justificativa: O evento gerará ampla visibilidade na mídia e redes sociais.</p>
-                </div>
-            </li>
-            <li onclick="toggleDetails(this)">
-                Evento de lançamento para concessionárias
-                <input type="checkbox" onclick="event.stopPropagation(); updateProgress()">
-                <div class="details">
-                    <p>Budget: R$ 1.5M</p>
-                    <p>KPI: 100% de adesão dos vendedores</p>
-                    <p>Justificativa: Treinamento e test-drives são cruciais para o sucesso de vendas.</p>
-                </div>
-            </li>
-        </ul>
-
-        <h2>Janeiro 2025 - Ativações e Test-Drives</h2>
-        <ul class="task-list">
-            <li onclick="toggleDetails(this)">
-                Início dos test-drives nas concessionárias
-                <input type="checkbox" onclick="event.stopPropagation(); updateProgress()">
-                <div class="details">
-                    <p>Budget: R$ 8M</p>
-                    <p>KPI: 5 mil test-drives agendados</p>
-                    <p>Justificativa: Test-drives aumentam a conversão em 12-15%.</p>
-                </div>
-            </li>
-            <li onclick="toggleDetails(this)">
-                Ativações de promoções nas concessionárias
-                <input type="checkbox" onclick="event.stopPropagation(); updateProgress()">
-                <div class="details">
-                    <p>KPI: Aumento de 20% no tráfego nas lojas</p>
-                    <p>Justificativa: Promoções atraem consumidores adicionais para as lojas.</p>
-                </div>
-            </li>
-        </ul>
-
-        <h2>Fevereiro-Março 2025 - Acompanhamento e Conversão</h2>
-        <ul class="task-list">
-            <li onclick="toggleDetails(this)">
-                Acompanhamento contínuo de conversão nas concessionárias
-                <input type="checkbox" onclick="event.stopPropagation(); updateProgress()">
-                <div class="details">
-                    <p>KPI: 12% de conversão nos test-drives</p>
-                    <p>Justificativa: Acompanhamento contínuo ajuda a otimizar a conversão.</p>
-                </div>
-            </li>
-            <li onclick="toggleDetails(this)">
-                Segunda avaliação de KPIs de conversão
-                <input type="checkbox" onclick="event.stopPropagation(); updateProgress()">
-                <div class="details">
-                    <p>KPI: 15% de conversão geral</p>
-                    <p>Justificativa: Ajustes contínuos garantem o alcance das metas de vendas.</p>
-                </div>
-            </li>
-        </ul>
-
-        <h2>Resumo do Budget Total</h2>
-        <p><strong>Total: R$ 59M</strong></p>
+        <!-- Linhas expansíveis com tarefas -->
+        <h2>1. Lançamento do SUV-B (Awareness e Consideração)</h2>
         <ul>
-            <li>Lançamento do SUV-B (Awareness e Consideração): R$ 30M</li>
-            <li>Proteção do Segmento de Híbridos (Comparação e Promoção): R$ 15M</li>
-            <li>Ativações e Conversões (Test-Drives e Promoções): R$ 8M</li>
+            <li><input type="checkbox" onchange="updateProgress()"> Campanha de TV Aberta (Globo, SBT, Record) - R$ 10M 
+                <div class="details">
+                    <strong>Justificativa:</strong> A TV aberta atinge mais de 95% das vendas presenciais no Brasil, com programas de grande audiência (Kantar IBOPE 2023). :contentReference[oaicite:0]{index=0}<br>
+                    <strong>Fonte:</strong> Kantar IBOPE Media.
+                </div>
+            </li>
+            <li><input type="checkbox" onchange="updateProgress()"> Campanha Digital (Google, Facebook, Instagram) - R$ 10M 
+                <div class="details">
+                    <strong>Justificativa:</strong> 92% dos consumidores de veículos pesquisam online antes de comprar, justificando uma campanha digital robusta (Google 2023). :contentReference[oaicite:1]{index=1}<br>
+                    <strong>Fonte:</strong> Think with Google.
+                </div>
+            </li>
+            <li><input type="checkbox" onchange="updateProgress()"> Publicação de Outdoors em SP e RJ - R$ 6M 
+                <div class="details">
+                    <strong>Justificativa:</strong> Outdoors em áreas de tráfego alto reforçam a visibilidade da marca e geram awareness em massa nas maiores cidades do Brasil. :contentReference[oaicite:2]{index=2}<br>
+                    <strong>Fonte:</strong> Clear Channel.
+                </div>
+            </li>
+        </ul>
+
+        <h2>2. Proteção do Território de Híbridos (Comparação e Promoção)</h2>
+        <ul>
+            <li><input type="checkbox" onchange="updateProgress()"> Campanha Comparativa na TV e Digital - R$ 10M
+                <div class="details">
+                    <strong>Justificativa:</strong> A campanha comparativa destaca os diferenciais dos híbridos Toyota frente à concorrência chinesa, com crescimento de 29% previsto para o setor em 2023. :contentReference[oaicite:3]{index=3}<br>
+                    <strong>Fonte:</strong> McKinsey & Company.
+                </div>
+            </li>
+            <li><input type="checkbox" onchange="updateProgress()"> Promoções em Concessionárias (Test-Drives) - R$ 5M
+                <div class="details">
+                    <strong>Justificativa:</strong> Test-drives aumentam a probabilidade de compra em até 15%, sendo uma ferramenta essencial para conversão (Motor1 Brasil 2023). :contentReference[oaicite:4]{index=4}<br>
+                    <strong>Fonte:</strong> Motor1 Brasil.
+                </div>
+            </li>
+        </ul>
+
+        <h2>3. Evento de Lançamento do Segmento SUV-B</h2>
+        <ul>
+            <li><input type="checkbox" onchange="updateProgress()"> Evento de Lançamento para Imprensa - R$ 1.5M
+                <div class="details">
+                    <strong>Justificativa:</strong> A imprensa automotiva tem grande influência sobre os consumidores e gera mídia espontânea, essencial para o lançamento (Influencer Marketing Hub 2023). :contentReference[oaicite:5]{index=5}<br>
+                    <strong>Fonte:</strong> Influencer Marketing Hub.
+                </div>
+            </li>
+            <li><input type="checkbox" onchange="updateProgress()"> Evento de Lançamento para Concessionárias - R$ 1.5M
+                <div class="details">
+                    <strong>Justificativa:</strong> O treinamento das concessionárias garante maior sucesso nas vendas, com aumento de conversão em até 30% (AutoData 2023). :contentReference[oaicite:6]{index=6}<br>
+                    <strong>Fonte:</strong> AutoData.
+                </div>
+            </li>
         </ul>
     </div>
 
