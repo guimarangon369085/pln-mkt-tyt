@@ -1,136 +1,519 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plano Estratégico de Lançamento - SUV-B Toyota</title>
+    <title>Cronograma de Lançamento Toyota SUV-B e Proteção de Híbridos</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-color: #f5f5f5;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #e30613; /* Cor oficial da Toyota */
+            margin-bottom: 40px;
+        }
+        .logo {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 120px;
+        }
+        .gantt-container {
+            display: flex;
+            flex-direction: column;
+            margin-top: 40px;
+        }
+        .progress-bars {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+        }
+        .progress-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .progress-label {
+            width: 150px;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: left;
             color: #333;
         }
-        .container {
-            max-width: 960px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: white;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        h1, h2, h3 {
-            text-align: center;
-            color: #b00d0d; /* Cor da Toyota */
-        }
         .progress-bar {
-            width: 100%;
+            flex-grow: 1;
             background-color: #ddd;
-            border-radius: 5px;
-            overflow: hidden;
-            margin: 20px 0;
+            border-radius: 10px;
+            position: relative;
+            height: 25px;
+            margin-left: 10px;
         }
-        .progress {
-            height: 20px;
-            background-color: #b00d0d; /* Cor da Toyota */
-            width: 0%;
-            border-radius: 5px;
-            transition: width 0.3s;
+        .progress-bar div {
+            height: 100%;
+            border-radius: 10px;
+            text-align: center;
+            line-height: 25px;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
         }
-        .details {
-            display: none;
+        .completed {
+            background-color: #4CAF50; /* Verde para completo */
         }
-        .details.active {
-            display: block;
+        .in-progress {
+            background-color: #FF8C00; /* Laranja escuro para em progresso */
+            color: white;
+        }
+        .not-started {
+            background-color: #F44336; /* Vermelho para não iniciada */
+        }
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
             padding: 10px 0;
+            border-bottom: 2px solid #ddd;
+            background-color: #fff;
+            padding-left: 200px; /* Alinhando com o início da primeira barra */
         }
-        input[type="checkbox"] {
-            margin-right: 10px;
+        .calendar-header div {
+            flex-grow: 1;
+            text-align: center;
+            font-weight: bold;
+            color: #333;
+        }
+        .gantt-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 10px 0;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        .gantt-row:hover {
+            background-color: #f0f0f0;
+        }
+        .activity {
+            width: 200px;
+            font-weight: bold;
+            padding-right: 10px;
+            color: #333;
+        }
+        .gantt-bar-container {
+            display: flex;
+            flex-grow: 1;
+            position: relative;
+            height: 30px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+        }
+        .gantt-bar {
+            background-color: #e30613;
+            height: 30px;
+            border-radius: 5px;
+            position: absolute;
+            top: 0;
+            color: white;
+            text-align: center;
+            font-size: 12px;
+            line-height: 30px;
+            white-space: nowrap;
+            padding-left: 5px;
+            padding-right: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .expandable-content {
+            display: none;
+            background-color: #fafafa;
+            padding: 10px;
+            margin-top: 20px; /* Adicionando espaço extra entre blocos expandidos */
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        select {
+            margin-left: 10px;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+        }
+        .expandable-content p {
+            margin: 0;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Plano Estratégico de Lançamento - SUV-B Toyota</h1>
+    <img src="toyota-logo.png" alt="Toyota Logo" class="logo">
+    <h1>Cronograma de Lançamento - Toyota</h1>
 
-        <!-- Barra de progresso geral -->
-        <div class="progress-bar">
-            <div id="overallProgress" class="progress"></div>
+    <!-- Campo para ajuste de Budget Total -->
+    <h2>Budget Total: R$ <input type="number" id="totalBudget" value="59000000" style="width: 150px;" onchange="updateBudget()"></h2>
+
+    <!-- Progress Bars for Status -->
+    <div class="progress-bars">
+        <div class="progress-item">
+            <div class="progress-label">Completas</div>
+            <div class="progress-bar"><div class="completed" id="completed-bar" style="width: 0%">0%</div></div>
         </div>
-
-        <!-- Linhas expansíveis com tarefas -->
-        <h2>1. Lançamento do SUV-B (Awareness e Consideração)</h2>
-        <ul>
-            <li><input type="checkbox" onchange="updateProgress()"> Campanha de TV Aberta (Globo, SBT, Record) - R$ 10M 
-                <div class="details">
-                    <strong>Justificativa:</strong> A TV aberta atinge mais de 95% das vendas presenciais no Brasil, com programas de grande audiência (Kantar IBOPE 2023). :contentReference[oaicite:0]{index=0}<br>
-                    <strong>Fonte:</strong> Kantar IBOPE Media.
-                </div>
-            </li>
-            <li><input type="checkbox" onchange="updateProgress()"> Campanha Digital (Google, Facebook, Instagram) - R$ 10M 
-                <div class="details">
-                    <strong>Justificativa:</strong> 92% dos consumidores de veículos pesquisam online antes de comprar, justificando uma campanha digital robusta (Google 2023). :contentReference[oaicite:1]{index=1}<br>
-                    <strong>Fonte:</strong> Think with Google.
-                </div>
-            </li>
-            <li><input type="checkbox" onchange="updateProgress()"> Publicação de Outdoors em SP e RJ - R$ 6M 
-                <div class="details">
-                    <strong>Justificativa:</strong> Outdoors em áreas de tráfego alto reforçam a visibilidade da marca e geram awareness em massa nas maiores cidades do Brasil. :contentReference[oaicite:2]{index=2}<br>
-                    <strong>Fonte:</strong> Clear Channel.
-                </div>
-            </li>
-        </ul>
-
-        <h2>2. Proteção do Território de Híbridos (Comparação e Promoção)</h2>
-        <ul>
-            <li><input type="checkbox" onchange="updateProgress()"> Campanha Comparativa na TV e Digital - R$ 10M
-                <div class="details">
-                    <strong>Justificativa:</strong> A campanha comparativa destaca os diferenciais dos híbridos Toyota frente à concorrência chinesa, com crescimento de 29% previsto para o setor em 2023. :contentReference[oaicite:3]{index=3}<br>
-                    <strong>Fonte:</strong> McKinsey & Company.
-                </div>
-            </li>
-            <li><input type="checkbox" onchange="updateProgress()"> Promoções em Concessionárias (Test-Drives) - R$ 5M
-                <div class="details">
-                    <strong>Justificativa:</strong> Test-drives aumentam a probabilidade de compra em até 15%, sendo uma ferramenta essencial para conversão (Motor1 Brasil 2023). :contentReference[oaicite:4]{index=4}<br>
-                    <strong>Fonte:</strong> Motor1 Brasil.
-                </div>
-            </li>
-        </ul>
-
-        <h2>3. Evento de Lançamento do Segmento SUV-B</h2>
-        <ul>
-            <li><input type="checkbox" onchange="updateProgress()"> Evento de Lançamento para Imprensa - R$ 1.5M
-                <div class="details">
-                    <strong>Justificativa:</strong> A imprensa automotiva tem grande influência sobre os consumidores e gera mídia espontânea, essencial para o lançamento (Influencer Marketing Hub 2023). :contentReference[oaicite:5]{index=5}<br>
-                    <strong>Fonte:</strong> Influencer Marketing Hub.
-                </div>
-            </li>
-            <li><input type="checkbox" onchange="updateProgress()"> Evento de Lançamento para Concessionárias - R$ 1.5M
-                <div class="details">
-                    <strong>Justificativa:</strong> O treinamento das concessionárias garante maior sucesso nas vendas, com aumento de conversão em até 30% (AutoData 2023). :contentReference[oaicite:6]{index=6}<br>
-                    <strong>Fonte:</strong> AutoData.
-                </div>
-            </li>
-        </ul>
+        <div class="progress-item">
+            <div class="progress-label">Em Progresso</div>
+            <div class="progress-bar"><div class="in-progress" id="in-progress-bar" style="width: 0%">0%</div></div>
+        </div>
+        <div class="progress-item">
+            <div class="progress-label">Não Iniciadas</div>
+            <div class="progress-bar"><div class="not-started" id="not-started-bar" style="width: 100%">100%</div></div>
+        </div>
     </div>
 
-    <!-- Script para Atualizar o Progresso e Expandir Linhas -->
+    <div class="gantt-container">
+        <!-- Calendar Header with Dates -->
+        <div class="calendar-header">
+            <div>Nov</div>
+            <div>Dez</div>
+            <div>Jan</div>
+            <div>Fev</div>
+            <div>Mar</div>
+        </div>
+
+        <!-- Activity Rows and Gantt Bars with Status Dropdown -->
+        <div class="gantt-row">
+            <div class="activity">Contratação da Agência</div>
+            <div class="gantt-bar-container">
+                <div class="gantt-bar" style="width: 10%; left: 0%;" onclick="toggleDetails('item1')">
+                    01/11 - 15/11
+                </div>
+            </div>
+            <select onchange="updateStatus(this, 'Contratação da Agência')">
+                <option value="not-started" selected>Não Iniciada</option>
+                <option value="in-progress">Em Progresso</option>
+                <option value="completed">Completa</option>
+            </select>
+            <span id="Contratação da Agência-budget">R$ 0 (N/A)</span>
+        </div>
+        <div id="item1" class="expandable-content">
+            <p><strong>Responsável:</strong> Equipe de Marketing</p>
+            <p><strong>Budget:</strong> N/A</p>
+            <p><strong>KPI:</strong> Tempo de contratação (5 dias), Satisfação da equipe (escala 1-5)</p>
+            <p><strong>Memorial Descritivo:</strong> A agência de eventos será responsável por:
+                <ul>
+                    <li>Locação de espaço físico adequado para o lançamento (mínimo de 150 pessoas);</li>
+                    <li>Coordenação de todos os fornecedores (som, iluminação, palco);</li>
+                    <li>Organização de coquetel para imprensa e convidados especiais;</li>
+                    <li>Garantia de que a montagem será concluída até 48h antes do evento;</li>
+                    <li>Desenvolvimento do cronograma completo do evento, incluindo logística de convidados e coordenação do transporte;</li>
+                    <li>Execução de toda a parte visual e de ambientação de acordo com as diretrizes da marca Toyota.</li>
+                </ul>
+            </p>
+        </div>
+
+        <div class="gantt-row">
+            <div class="activity">Desenvolvimento Material</div>
+            <div class="gantt-bar-container">
+                <div class="gantt-bar" style="width: 30%; left: 5%;" onclick="toggleDetails('item2')">
+                    10/11 - 15/12
+                </div>
+            </div>
+            <select onchange="updateStatus(this, 'Desenvolvimento Material')">
+                <option value="not-started" selected>Não Iniciada</option>
+                <option value="in-progress">Em Progresso</option>
+                <option value="completed">Completa</option>
+            </select>
+            <span id="Desenvolvimento Material-budget">Produção: R$ 6,000,000 / Mídia: R$ 4,000,000</span>
+        </div>
+               <div id="item2" class="expandable-content">
+            <p><strong>Responsável:</strong> DAVID</p>
+            <p><strong>Budget:</strong> Produção: R$ 6,000,000 / Mídia: R$ 4,000,000</p>
+            <p><strong>KPI:</strong> Qualidade do material (4), Prazo de entrega (35 dias)</p>
+            <p><strong>Estratégia:</strong> Produzir materiais de alta qualidade, com foco em vídeos, imagens e conteúdo digital voltados para o público-alvo de 30-45 anos.</p>
+            <p><strong>Passo a Passo:</strong>
+                <ul>
+                    <li>Identificar necessidades de produção visual (vídeos, imagens, banners);</li>
+                    <li>Planejar roteiro e concepção visual para anúncios de TV e digital;</li>
+                    <li>Reunião de briefing com a equipe de produção e aprovação das peças criativas;</li>
+                    <li>Produção dos vídeos e imagens;</li>
+                    <li>Finalização do material e aprovação final pela Toyota;</li>
+                    <li>Distribuição das peças para as plataformas de mídia e TV.</li>
+                </ul>
+            </p>
+        </div>
+
+        <div class="gantt-row">
+            <div class="activity">Campanha de TV</div>
+            <div class="gantt-bar-container">
+                <div class="gantt-bar" style="width: 40%; left: 10%;" onclick="toggleDetails('item3')">
+                    20/11 - 15/01
+                </div>
+            </div>
+            <select onchange="updateStatus(this, 'Campanha de TV')">
+                <option value="not-started" selected>Não Iniciada</option>
+                <option value="in-progress">Em Progresso</option>
+                <option value="completed">Completa</option>
+            </select>
+            <span id="Campanha de TV-budget">Produção: R$ 7,000,000 / Mídia: R$ 18,000,000</span>
+        </div>
+        <div id="item3" class="expandable-content">
+            <p><strong>Responsável:</strong> DAVID</p>
+            <p><strong>Budget:</strong> Produção: R$ 7,000,000 / Mídia: R$ 18,000,000</p>
+            <p><strong>KPI:</strong> Alcance da campanha (15M), GRPs (50)</p>
+            <p><strong>Estratégia:</strong> Foco em uma campanha de TV que atinja o público nacional, especialmente durante horários nobres em canais de maior audiência.</p>
+            <p><strong>Passo a Passo:</strong>
+                <ul>
+                    <li>Desenvolvimento dos roteiros e storyboards para os comerciais de TV;</li>
+                    <li>Seleção de produtoras e agendamento das gravações;</li>
+                    <li>Filmagem dos comerciais em diversos cenários (veículos, pessoas, situações reais);</li>
+                    <li>Edição e finalização do material audiovisual;</li>
+                    <li>Envio para aprovação final do cliente (Toyota);</li>
+                    <li>Compra de mídia e agendamento de exibição em canais de TV;</li>
+                    <li>Monitoramento de GRPs e ajustes estratégicos ao longo da campanha.</li>
+                </ul>
+            </p>
+        </div>
+
+        <div class="gantt-row">
+            <div class="activity">Campanha Digital</div>
+            <div class="gantt-bar-container">
+                <div class="gantt-bar" style="width: 35%; left: 15%;" onclick="toggleDetails('item4')">
+                    10/12 - 30/01
+                </div>
+            </div>
+            <select onchange="updateStatus(this, 'Campanha Digital')">
+                <option value="not-started" selected>Não Iniciada</option>
+                <option value="in-progress">Em Progresso</option>
+                <option value="completed">Completa</option>
+            </select>
+            <span id="Campanha Digital-budget">Produção: R$ 3,500,000 / Mídia: R$ 8,500,000</span>
+        </div>
+        <div id="item4" class="expandable-content">
+            <p><strong>Responsável:</strong> DAVID</p>
+            <p><strong>Budget:</strong> Produção: R$ 3,500,000 / Mídia: R$ 8,500,000</p>
+            <p><strong>KPI:</strong> Engajamento nas redes sociais (300 mil), CTR (2%)</p>
+            <p><strong>Estratégia:</strong> Uma campanha digital massiva será distribuída em redes sociais, focando no Facebook, Instagram e YouTube.</p>
+            <p><strong>Passo a Passo:</strong>
+                <ul>
+                    <li>Planejamento de posts patrocinados e conteúdo interativo para redes sociais;</li>
+                    <li>Criação de vídeos curtos e estáticos para anúncios pagos no Facebook e Instagram;</li>
+                    <li>Produção de conteúdos interativos para o YouTube com foco em conversão de leads;</li>
+                    <li>Configuração de campanhas de segmentação nas plataformas (Google Ads, Facebook Ads);</li>
+                    <li>Acompanhamento das métricas (engajamento, CTR) e otimização contínua.</li>
+                </ul>
+            </p>
+        </div>
+
+        <div class="gantt-row">
+            <div class="activity">Campanha OOH</div>
+            <div class="gantt-bar-container">
+                <div class="gantt-bar" style="width: 30%; left: 20%;" onclick="toggleDetails('item5')">
+                    15/12 - 25/01
+                </div>
+            </div>
+            <select onchange="updateStatus(this, 'Campanha OOH')">
+                <option value="not-started" selected>Não Iniciada</option>
+                <option value="in-progress">Em Progresso</option>
+                <option value="completed">Completa</option>
+            </select>
+            <span id="Campanha OOH-budget">Produção: R$ 1,000,000 / Mídia: R$ 2,000,000</span>
+        </div>
+        <div id="item5" class="expandable-content">
+            <p><strong>Responsável:</strong> DAVID</p>
+            <p><strong>Budget:</strong> Produção: R$ 1,000,000 / Mídia: R$ 2,000,000</p>
+            <p><strong>KPI:</strong> Visibilidade (500 mil), Recall da marca (75%)</p>
+            <p><strong>Estratégia:</strong> A campanha OOH será direcionada para outdoors em locais estratégicos de São Paulo e Rio de Janeiro.</p>
+            <p><strong>Passo a Passo:</strong>
+                <ul>
+                    <li>Desenvolvimento de layouts de outdoors com mensagens impactantes sobre o SUV-B;</li>
+                    <li>Criação dos materiais visuais e envio para a produção dos outdoors;</li>
+                    <li>Compra de mídia OOH para veiculação em pontos estratégicos;</li>
+                    <li>Instalação e monitoramento dos outdoors nas regiões escolhidas;</li>
+                    <li>Revisão do recall e impacto com base nas métricas de visibilidade.</li>
+                </ul>
+            </p>
+        </div>
+
+        <div class="gantt-row">
+            <div class="activity">Campanha Comparativa</div>
+            <div class="gantt-bar-container">
+                <div class="gantt-bar" style="width: 40%; left: 25%;" onclick="toggleDetails('item6')">
+                    20/12 - 05/02
+                </div>
+            </div>
+            <select onchange="updateStatus(this, 'Campanha Comparativa')">
+                <option value="not-started" selected>Não Iniciada</option>
+                <option value="in-progress">Em Progresso</option>
+                <option value="completed">Completa</option>
+            </select>
+            <span id="Campanha Comparativa-budget">Produção: R$ 2,000,000 / Mídia: R$ 4,000,000</span>
+        </div>
+        <div id="item6" class="expandable-content">
+            <p><strong>Responsável:</strong> DAVID</p>
+            <p><strong>Budget:</strong> Produção: R$ 2,000,000 / Mídia: R$ 4,000,000</p>
+            <p><strong>KPI:</strong> Visualizações (2M), Taxa de cliques (2%)</p>
+            <p><strong>Estratégia:</strong> A campanha comparativa será uma peça essencial para destacar a superioridade dos híbridos Toyota em comparação com concorrentes chineses.</p>
+            <p><strong>Passo a Passo:</strong>
+                <ul>
+                    <li>Desenvolver o conteúdo comparativo, com foco nos diferenciais tecnológicos;</                     <li>Produção de vídeos comparativos que serão distribuídos em canais digitais;</li>
+                    <li>Configuração das campanhas de mídia paga no YouTube e Google Display;</li>
+                    <li>Distribuição dos conteúdos em canais relevantes e monitoramento de métricas;</li>
+                    <li>Ajustes na campanha com base nos KPIs de visualizações e cliques.</li>
+                </ul>
+            </p>
+        </div>
+
+        <div class="gantt-row">
+            <div class="activity">Planejamento do Evento de Lançamento</div>
+            <div class="gantt-bar-container">
+                <div class="gantt-bar" style="width: 30%; left: 40%;" onclick="toggleDetails('item7')">
+                    15/01 - 01/02
+                </div>
+            </div>
+            <select onchange="updateStatus(this, 'Planejamento do Evento de Lançamento')">
+                <option value="not-started" selected>Não Iniciada</option>
+                <option value="in-progress">Em Progresso</option>
+                <option value="completed">Completa</option>
+            </select>
+            <span id="Planejamento do Evento de Lançamento-budget">R$ 2,400,000</span>
+        </div>
+        <div id="item7" class="expandable-content">
+            <p><strong>Responsável:</strong> Agência de Eventos</p>
+            <p><strong>Budget:</strong> R$ 2,400,000</p>
+            <p><strong>KPI:</strong> Participação do público (100%), Cobertura da imprensa (80%)</p>
+            <p><strong>Estratégia:</strong> Planejar o evento de lançamento, cobrindo todas as etapas, desde a locação até a execução.</p>
+            <p><strong>Passo a Passo:</strong>
+                <ul>
+                    <li>Locação do espaço para o evento, com capacidade para 150 pessoas;</li>
+                    <li>Coordenação de fornecedores de iluminação, som, e palco;</li>
+                    <li>Desenvolvimento da logística de convidados e distribuição dos convites;</li>
+                    <li>Criação de um cronograma detalhado para o evento, com atividades específicas;</li>
+                    <li>Revisão e aprovação final do layout do evento.</li>
+                </ul>
+            </p>
+        </div>
+
+        <div class="gantt-row">
+            <div class="activity">Execução do Evento de Lançamento</div>
+            <div class="gantt-bar-container">
+                <div class="gantt-bar" style="width: 20%; left: 45%;" onclick="toggleDetails('item8')">
+                    05/02 - 07/02
+                </div>
+            </div>
+            <select onchange="updateStatus(this, 'Execução do Evento de Lançamento')">
+                <option value="not-started" selected>Não Iniciada</option>
+                <option value="in-progress">Em Progresso</option>
+                <option value="completed">Completa</option>
+            </select>
+            <span id="Execução do Evento de Lançamento-budget">R$ 1,600,000</span>
+        </div>
+        <div id="item8" class="expandable-content">
+            <p><strong>Responsável:</strong> Agência de Eventos</p>
+            <p><strong>Budget:</strong> R$ 1,600,000</p>
+            <p><strong>KPI:</strong> Satisfação do participante (4), Alcance social do evento (100 mil)</p>
+            <p><strong>Estratégia:</strong> A execução do evento de lançamento incluirá cobertura ao vivo nas redes sociais e uma transmissão para influenciadores automotivos.</p>
+            <p><strong>Passo a Passo:</strong>
+                <ul>
+                    <li>Montagem do local com a infraestrutura completa (som, palco, iluminação);</li>
+                    <li>Organização do coquetel para a imprensa e convidados;</li>
+                    <li>Coordenação da logística de transporte e acomodação dos convidados;</li>
+                    <li>Transmissão ao vivo e cobertura do evento em redes sociais;</li>
+                    <li>Acompanhamento e medição de engajamento nas redes durante e após o evento.</li>
+                </ul>
+            </p>
+        </div>
+
+        <div class="gantt-row">
+            <div class="activity">PR e Comunicação com a Imprensa</div>
+            <div class="gantt-bar-container">
+                <div class="gantt-bar" style="width: 50%; left: 0%;" onclick="toggleDetails('item9')">
+                    10/11 - 07/02
+                </div>
+            </div>
+            <select onchange="updateStatus(this, 'PR e Comunicação com a Imprensa')">
+                <option value="not-started" selected>Não Iniciada</option>
+                <option value="in-progress">Em Progresso</option>
+                <option value="completed">Completa</option>
+            </select>
+            <span id="PR e Comunicação com a Imprensa-budget">R$ 4,000,000</span>
+        </div>
+        <div id="item9" class="expandable-content">
+            <p><strong>Responsável:</strong> Giusti Creative PR</p>
+            <p><strong>Budget:</strong> R$ 4,000,000</p>
+            <p><strong>KPI:</strong> Cobertura da imprensa (75%), Influenciadores envolvidos (50)</p>
+            <p><strong>Estratégia:</strong> A equipe de PR trabalhará diretamente com influenciadores e jornalistas automotivos para maximizar a cobertura de mídia.</p>
+            <p><strong>Passo a Passo:</strong>
+                <ul>
+                    <li>Coordenação de entrevistas e press releases com os principais veículos automotivos;</li>
+                    <li>Convite de influenciadores-chave para o evento de lançamento e sessões de test-drive;</li>
+                    <li>Monitoramento da cobertura de mídia e redes sociais durante o lançamento;</li>
+                    <li>Revisão e avaliação da cobertura geral e relatórios pós-evento.</li>
+                </ul>
+            </p>
+        </div>
+    </div>
+
     <script>
-        function updateProgress() {
-            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-            const total = checkboxes.length;
-            let completed = 0;
-            checkboxes.forEach(checkbox => {
-                if (checkbox.checked) completed++;
-            });
-            const progress = (completed / total) * 100;
-            document.getElementById('overallProgress').style.width = progress + '%';
+        // Valores de budget inicial por atividade (valores reais conforme o plano)
+        var budgets = {
+            'Contratação da Agência': 0, // Sem custo
+            'Desenvolvimento Material': 10000000,
+            'Campanha de TV': 25000000,
+            'Campanha Digital': 12000000,
+            'Campanha OOH': 3000000,
+            'Campanha Comparativa': 6000000,
+            'Planejamento do Evento de Lançamento': 2400000,
+            'Execução do Evento de Lançamento': 1600000,
+            'PR e Comunicação com a Imprensa': 4000000
+        };
+
+        var totalBudget = 59000000;
+
+        // Função para atualizar o budget
+        function updateBudget() {
+            var newTotalBudget = document.getElementById('totalBudget').value;
+            var budgetFactor = newTotalBudget / totalBudget;
+
+            // Recalcula todos os budgets com base na nova proporção
+            for (var activity in budgets) {
+                budgets[activity] = Math.round(budgets[activity] * budgetFactor);
+                document.getElementById(activity + '-budget').textContent = 'R$ ' + budgets[activity].toLocaleString();
+            }
+
+            totalBudget = newTotalBudget; // Atualiza o total de budget para o novo valor
         }
 
-        function toggleDetails(element) {
-            const details = element.querySelector('.details');
-            if (details) {
-                details.classList.toggle('active');
+        function updateStatus(selectElement, task) {
+            // Count number of tasks in each status
+            var completedTasks = document.querySelectorAll('select option:checked[value="completed"]').length;
+            var inProgressTasks = document.querySelectorAll('select option:checked[value="in-progress"]').length;
+            var notStartedTasks = 9 - completedTasks - inProgressTasks; // 9 atividades no total
+
+            // Calculate percentage for each status
+            var completedPercentage = (completedTasks / 9) * 100;
+            var inProgressPercentage = (inProgressTasks / 9) * 100;
+            var notStartedPercentage = (notStartedTasks / 9) * 100;
+
+            // Update progress bars
+            document.getElementById('completed-bar').style.width = completedPercentage + '%';
+            document.getElementById('completed-bar').textContent = Math.round(completedPercentage) + '%';
+            document.getElementById('in-progress-bar').style.width = inProgressPercentage + '%';
+            document.getElementById('in-progress-bar').textContent = Math.round(inProgressPercentage) + '%';
+            document.getElementById('not-started-bar').style.width = notStartedPercentage + '%';
+            document.getElementById('not-started-bar').textContent = Math.round(notStartedPercentage) + '%';
+        }
+
+        function toggleDetails(itemId) {
+            var item = document.getElementById(itemId);
+            if (item.style.display === "none" || item.style.display === "") {
+                item.style.display = "block";
+            } else {
+                item.style.display = "none";
             }
         }
     </script>
 </body>
 </html>
+
+
